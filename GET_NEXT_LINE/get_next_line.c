@@ -14,24 +14,65 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+size_t	ft_strlen(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+char	*ft_strjoin(char *ligne, char const *s1, char const *s2)
+{
+	int		r;
+	int		a;
+
+	ligne = (char *)malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof (char));
+	if (!ligne)
+		return (NULL);
+	r = -1;
+	a = -1;
+	while (s1[++r])
+		ligne[r] = s1[r];
+	while (s2[++a])
+		ligne[r++] = s2[a];
+	ligne[r] = '\0';
+	return (ligne);
+}
+
+char	*construct(char	*buf, char *ligne, int buffer)
+{
+	static	char	*tmp;
+	int	r;
+
+	tmp = malloc(buffer * sizeof(char) + 1);
+	if (!tmp)
+		return (NULL);
+	r = -1;
+	while (++r < buffer)
+		tmp[r] = buf[r];
+	tmp[r] = '\0';
+	r = -1;
+	while (tmp[++r] != '\n' && tmp[r])
+		ligne[r] = tmp[r];
+	ligne[r] = '\0';
+	free(tmp);
+	return (ligne);
+}
+
 char	*get_next_line(int fd)
 {
 	int	ret;
-	static int	i = -1;
-	i += 1;
-	char	tab[BUFFER_SIZE + 1];
-	char	*tub;
+	char	buf[BUFFER_SIZE + 1];
+	char	*ligne;
 
-	ret = read(fd, tab, BUFFER_SIZE);
-	tab[ret] = '\0';
-	tub = malloc((ft_ligne(tab) * sizeof(char) + 1));
-	while (tab[i] != '\n' && tab[i])
-	{
-		tub[i] = tab[i];
-		i++;
-	}
-	tub[i] = '\0';
-	return (tub);
+	ret = read(fd, buf, BUFFER_SIZE);
+	buf[ret] = '\0';
+	ligne = malloc(BUFFER_SIZE * sizeof(char) + 1);
+	construct(buf, ligne, BUFFER_SIZE);
+	return (ligne);
 }
 
 int	main(int argc, char **argv)
@@ -41,7 +82,6 @@ int	main(int argc, char **argv)
 	if(argc > 1)
 	{
 		fd = open(argv[1], O_RDONLY);
-		printf("%s\n", get_next_line(fd));
-		printf("%s\n", get_next_line(fd));
+		printf("%s", get_next_line(fd));
 	}
 }
