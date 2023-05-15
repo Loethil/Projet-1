@@ -24,10 +24,11 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-char	*ft_strjoin(char *ligne, char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	int		r;
 	int		a;
+	char	*ligne;
 
 	ligne = (char *)malloc ((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof (char));
 	if (!ligne)
@@ -36,29 +37,23 @@ char	*ft_strjoin(char *ligne, char const *s1, char const *s2)
 	a = -1;
 	while (s1[++r])
 		ligne[r] = s1[r];
-	while (s2[++a])
+	while (s2[++a] != '\n' || s2[a])
 		ligne[r++] = s2[a];
 	ligne[r] = '\0';
 	return (ligne);
 }
 
-char	*construct(char	*buf, char *ligne, int buffer)
+char	*construct(int	fd, char *buf, char *ligne, int buffer)
 {
-	static	char	*tmp;
-	int	r;
+	int	a;
+	char	*s2;
 
-	tmp = malloc(buffer * sizeof(char) + 1);
-	if (!tmp)
+	s2 = malloc(buffer * sizeof(char) + 1);
+	if (!s2)
 		return (NULL);
-	r = -1;
-	while (++r < buffer)
-		tmp[r] = buf[r];
-	tmp[r] = '\0';
-	r = -1;
-	while (tmp[++r] != '\n' && tmp[r])
-		ligne[r] = tmp[r];
-	ligne[r] = '\0';
-	free(tmp);
+	a = read(fd, s2, buffer);
+	s2[a] = '\0';
+	ligne = ft_strjoin(buf, s2);
 	return (ligne);
 }
 
@@ -71,7 +66,7 @@ char	*get_next_line(int fd)
 	ret = read(fd, buf, BUFFER_SIZE);
 	buf[ret] = '\0';
 	ligne = malloc(BUFFER_SIZE * sizeof(char) + 1);
-	construct(buf, ligne, BUFFER_SIZE);
+	construct(fd, buf, ligne, BUFFER_SIZE);
 	return (ligne);
 }
 
