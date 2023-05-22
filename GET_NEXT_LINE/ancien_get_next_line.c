@@ -5,16 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatteux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/22 15:45:23 by mbatteux          #+#    #+#             */
-/*   Updated: 2023/05/22 15:45:25 by mbatteux         ###   ########.fr       */
+/*   Created: 2023/05/10 15:27:13 by mbatteux          #+#    #+#             */
+/*   Updated: 2023/05/10 15:27:14 by mbatteux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -29,72 +27,107 @@ size_t	ft_strlen(const char *str)
 int	new_line(char *buf)
 {
 	int	r;
-	int	a;
 
 	r = 0;
-	a = 0;
 	while (buf[r])
 	{	
 		if (buf[r] == '\n')
-			a++;
+			return (1);
 		r++;
 	}
-	return (a);
+	return (0);
 }
-
-//cree le tableau de chaine de caractere temporaire
-char	*create_pile(char *buf, char **tmp)
+char	*create_pile(char *buf, char *tmp)
 {
 	int	v;
-	int	e;
+	int	j;
 
 	v = 0;
-	e = 0;
-
+	j = 0;
+	while (buf[j] != '\n')
+		j++;
+	while (buf[++j])
+		tmp[v++] = buf[j];
+	tmp[v] = '\0';
+	return (tmp);
 }
 
-//rajoute ce qui est stocke dans tmp au debut de line
-char	*stockpile(char *line, char **tmp)
+//si tmp contient des octes les mets au debut de la ligne
+char	*stockpile(char	*ligne, char *tmp)
 {
-	
+	int	a;
+
+	a = 0;
+	if (!tmp)
+		return (ligne);
+	while (tmp[a] && tmp[a] != '\n')
+	{
+		ligne[a] = tmp[a];
+		a++;
+	}
+	free (tmp);
+	return (ligne);
 }
 
 //construit et renvoie la ligne voulu
-char	*create_line(char *line, char *buf)
+char	*create_ligne(char *ligne, char *buf)
 {
-	static char **tmp;
-	static	int	i = 0;
+	int	e;
+	int	n;
+	static	char	*tmp;
 
-	tmp = malloc((new_line(buf) + 1) * sizeof(**char) + 1)
+	e = 0;
+	n = 0;
+	tmp = malloc(ft_strlen(buf) * sizeof(char));
 	if (!tmp)
 		return (NULL);
-
-	i++;
-	return (line);
+	ligne = stockpile(ligne, tmp);
+	while (ligne[e])
+		e++;
+	while (buf[n] && buf[n] != '\n')
+		ligne[e++] = buf[n++];
+	if (buf[n])
+		tmp = create_pile(buf, tmp);
+	ligne[e] = '\0';
+	return (ligne);
 }
-
 //fonction principale
 char	*get_next_line(int fd)
 {
-	char	*line;
+	char	*ligne;
 	char	buf[BUFFER_SIZE + 1];
 	int	red;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 		return (NULL);
-	line = malloc(9999999 * sizeof(char) + 1);
-	if (!line)
+	ligne = malloc(9999999 * sizeof(char) + 1);
+	if (!ligne)
 		return (NULL);
 	while ((red = read(fd, buf, BUFFER_SIZE)))
 	{
 		buf[red] = '\0';
-		if (new_line(buf) > 0)
+		if (new_line(buf) == 1)
 		{
-			line = create_line(line, buf);
+			ligne = create_ligne(ligne, buf);
 			break ;
 		}
 		else if (new_line(buf) == 0)
-			line = create_line(line, buf);
+			ligne = create_ligne(ligne, buf);
 	}
-	return (line);
+	return (ligne);
+}
+
+int	main(int argc, char **argv)
+{
+	int	fd;
+	//char	*gob;
+
+	if(argc > 1)
+	{
+		fd = open(argv[1], O_RDONLY);
+		//gob = get_next_line(fd);
+		printf("%s\n", get_next_line(fd));
+		printf("%s\n", get_next_line(fd));
+		//free(gob);
+	}
 }
