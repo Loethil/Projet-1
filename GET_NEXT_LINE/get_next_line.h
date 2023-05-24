@@ -20,27 +20,10 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
-void	ft_putchar(char c)
-{
-	write (1, &c, 1);
-}
-void	ft_putstr(char *s)
-{
-	int	r;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif 
 
-	r = -1;
-	while (s[++r])
-		ft_putchar(s[r]);
-}
-int	ft_ligne(char *tab)
-{
-	int	a;
+char	*get_next_line(int fd);
 
-	a = 0;
-	while (tab[a] != '\n' && tab[a])
-	{
-		a++;
-	}
-	return (a);
-}
 #endif

@@ -13,6 +13,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+
 size_t	ft_strlen(const char *str)
 {
 	int	i;
@@ -37,84 +38,80 @@ int	new_line(char *buf)
 	}
 	return (0);
 }
-char	*create_pile(char *buf, char *tmp)
+
+//cree le tableau de chaine de caractere temporaire
+char	*create_pile(char *line, char *buf)
 {
+	static char *tmp;
 	int	v;
-	int	j;
-
-	v = 0;
-	j = 0;
-	while (buf[j] != '\n')
-		j++;
-	while (buf[++j])
-		tmp[v++] = buf[j];
-	tmp[v] = '\0';
-	return (tmp);
-}
-
-//si tmp contient des octes les mets au debut de la ligne
-char	*stockpile(char	*ligne, char *tmp)
-{
 	int	a;
 
+	v = -1;
 	a = 0;
-	if (!tmp)
-		return (ligne);
-	while (tmp[a] && tmp[a] != '\n')
-	{
-		ligne[a] = tmp[a];
-		a++;
-	}
-	free (tmp);
-	return (ligne);
-}
-
-//construit et renvoie la ligne voulu
-char	*create_ligne(char *ligne, char *buf)
-{
-	int	e;
-	int	n;
-	static	char	*tmp;
-
-	e = 0;
-	n = 0;
-	tmp = malloc(ft_strlen(buf) * sizeof(char));
+	tmp = malloc((ft_strlen(buf)) * sizeof(char) + 1);
 	if (!tmp)
 		return (NULL);
-	ligne = stockpile(ligne, tmp);
-	while (ligne[e])
-		e++;
-	while (buf[n] && buf[n] != '\n')
-		ligne[e++] = buf[n++];
-	if (buf[n])
-		tmp = create_pile(buf, tmp);
-	ligne[e] = '\0';
-	return (ligne);
+	while (buf[++v])
+		tmp[v] = buf[v];
+	while (line[a])
+		a++;
+	v = 0;
+	while (tmp[v] != '\n')
+		line[a++] = tmp[v++];
+	line[++a] = '\n';
+	line[++a] = '\0';
+	return (line);
 }
+/*
+//rajoute ce qui est stocke dans tmp au debut de line
+char	*stock_pile(char *line, char *tmp)
+{
+	
+}
+*/
+//construit et renvoie la ligne voulu.
+char	*create_line(char *line, char *buf)
+{
+	int	a;
+	int	v;
+
+	a = 0;
+	v = 0;
+	while (line[a] != '\0')
+		a++;
+	while (buf[v] != '\0')
+		line[a++] = buf[v++];
+	line[++a] = '\0';
+	return (line);
+}
+
 //fonction principale
 char	*get_next_line(int fd)
 {
-	char	*ligne;
+	char	*line;
 	char	buf[BUFFER_SIZE + 1];
 	int	red;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 		return (NULL);
-	ligne = malloc(9999999 * sizeof(char) + 1);
-	if (!ligne)
+	line = malloc(10000000 * sizeof(char) + 1);
+	if (!line)
 		return (NULL);
 	while ((red = read(fd, buf, BUFFER_SIZE)))
 	{
 		buf[red] = '\0';
 		if (new_line(buf) == 1)
 		{
-			ligne = create_ligne(ligne, buf);
-			break ;
+			line = create_pile(line, buf);
+			//printf ("%s\n", buf);
+			break;
 		}
-		else if (new_line(buf) == 0)
-			ligne = create_ligne(ligne, buf);
+		else
+		{
+			line = create_line(line, buf);
+		}
 	}
-	return (ligne);
+	return (line);
 }
 
 int	main(int argc, char **argv)
@@ -126,7 +123,6 @@ int	main(int argc, char **argv)
 	{
 		fd = open(argv[1], O_RDONLY);
 		//gob = get_next_line(fd);
-		printf("%s\n", get_next_line(fd));
 		printf("%s\n", get_next_line(fd));
 		//free(gob);
 	}
