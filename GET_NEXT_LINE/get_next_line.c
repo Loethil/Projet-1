@@ -20,6 +20,8 @@ int	ft_strlen(char	*tmp)
 	int	l;
 
 	l = 0;
+	if (tmp == NULL)
+		return (0);
 	while (tmp[l])
 		l++;
 	return (l);
@@ -30,7 +32,7 @@ int	new_line(char *buf)
 	int	r;
 
 	r = 0;
-	while (buf[r])
+	while (buf[r] != '\0')
 	{
 		if (buf[r] == '\n')
 			return (1);
@@ -44,7 +46,7 @@ char	*check_pile(char *line, char *tmp)
 	int	a;
 
 	a = 0;
-	if (tmp != NULL)
+	if (ft_strlen(tmp) > 0)
 	{
 		while (tmp[a])
 		{
@@ -52,12 +54,13 @@ char	*check_pile(char *line, char *tmp)
 			a++;
 		}
 		line[a] = '\0';
+		tmp[0] = '\0';
 		free (tmp);
 	}
 	return (line);
 }
 
-char	*create_pile(char *line, char *tmp)
+char	*change_line(char *line, char *tmp)
 {
 	int	v;
 	int	e;
@@ -68,14 +71,16 @@ char	*create_pile(char *line, char *tmp)
 		v++;
 	while (line[++v] != '\0')
 		tmp[e++] = line[v];
+	tmp[e] = '\0';
 	v = 0;
 	while (line[v] != '\n')
 		v++;
 	line[++v] = '\0';
+	//printf ("tmp = %s\n", tmp);
 	return (line);
 }
 
-char	*create_line(char *line, char *buf)
+char	*create_line(char *line, char *buf, int nbr)
 {
 	static char	*tmp;
 	int			r;
@@ -91,10 +96,8 @@ char	*create_line(char *line, char *buf)
 	line[a] = '\0';
 	if (new_line(line) == 1)
 	{
-		tmp = malloc(10000000 * sizeof(char));
-		if (!tmp)
-			return (NULL);
-		line = create_pile(line, tmp);
+		tmp = malloc (nbr * sizeof(char) + 1);
+		line = change_line(line, tmp);
 	}
 	return (line);
 }
@@ -102,7 +105,7 @@ char	*create_line(char *line, char *buf)
 char	*get_next_line(int fd)
 {
 	char	*line;
-	char	buf[BUFFER_SIZE + 1];
+	char	buf[BUFFER_SIZE];
 	int		red;
 
 	red = 1;
@@ -111,18 +114,16 @@ char	*get_next_line(int fd)
 	line = malloc(10000000 * sizeof(char) + 1);
 	if (!line)
 		return (NULL);
-	while (red > 0)
+	while (red != 0)
 	{
 		red = read(fd, buf, BUFFER_SIZE);
 		if (new_line(buf) == 1)
 		{
-			line = create_line(line, buf);
+			line = create_line(line, buf, BUFFER_SIZE);
 			break ;
 		}
 		else if (new_line(buf) == 0)
-		{
-			line = create_line(line, buf);
-		}
+			line = create_line(line, buf, BUFFER_SIZE);
 	}
 	return (line);
 }
@@ -130,14 +131,36 @@ char	*get_next_line(int fd)
 int	main(int argc, char **argv)
 {
 	int	fd;
+	//char	*gob;
 
+	//gob = malloc(10000000 * sizeof(char));
 	if (argc > 1)
 	{
 		fd = open(argv[1], O_RDONLY);
-		printf("%s", get_next_line(fd));
-		printf("%s", get_next_line(fd));
-		printf("%s", get_next_line(fd));
-		printf("%s", get_next_line(fd));
-		printf("%s", get_next_line(fd));
+		/*while (gob != NULL)
+		{
+			gob = get_next_line(fd);
+			printf ("%s", gob);
+		}
+		free (gob);*/
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
 	}
+	return (0);
 }
