@@ -15,18 +15,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int	ft_strlen(char	*tmp)
-{
-	int	l;
-
-	l = 0;
-	if (tmp == NULL)
-		return (0);
-	while (tmp[l])
-		l++;
-	return (l);
-}
-
 int	new_line(char *buf)
 {
 	int	r;
@@ -45,42 +33,51 @@ char	*check_pile(char *line, char *tmp)
 {
 	int	a;
 
-	a = 0;
-	if (ft_strlen(tmp) > 0)
+	a = -1;
+	if (tmp != NULL)
 	{
-		while (tmp[a])
+		while (tmp[++a])
 		{
 			line[a] = tmp[a];
-			a++;
+			if (tmp[a] == '\0')
+				free (tmp);
 		}
 		line[a] = '\0';
-		tmp[0] = '\0';
-		free (tmp);
 	}
 	return (line);
 }
 
-char	*change_line(char *line, char *tmp)
+char	*change_line(char *line)
+{
+	int	v;
+
+	v = 0;
+	while (line[v] != '\n')
+		v++;
+	line[++v] = '\0';
+	//printf("tmp = %s", tmp);
+	return (line);
+}
+
+char	*create_pile(char *line, char *tmp)
 {
 	int	v;
 	int	e;
 
-	v = 0;
 	e = 0;
+	v = 0;
+	tmp = malloc (10000000 * sizeof(char));
+	if (!tmp)
+		return (NULL);
 	while (line[v] != '\n')
 		v++;
 	while (line[++v] != '\0')
 		tmp[e++] = line[v];
 	tmp[e] = '\0';
-	v = 0;
-	while (line[v] != '\n')
-		v++;
-	line[++v] = '\0';
-	//printf ("tmp = %s\n", tmp);
-	return (line);
+	return (tmp);
 }
 
-char	*create_line(char *line, char *buf, int nbr)
+char	*create_line(char *line, char *buf)
 {
 	static char	*tmp;
 	int			r;
@@ -88,6 +85,7 @@ char	*create_line(char *line, char *buf, int nbr)
 
 	r = 0;
 	a = 0;
+	//printf("tmp = %s", tmp);
 	line = check_pile(line, tmp);
 	while (line[a])
 		a++;
@@ -96,34 +94,33 @@ char	*create_line(char *line, char *buf, int nbr)
 	line[a] = '\0';
 	if (new_line(line) == 1)
 	{
-		tmp = malloc (nbr * sizeof(char) + 1);
-		line = change_line(line, tmp);
+		tmp = create_pile(line, tmp);
+		line = change_line(line);
 	}
+	printf("line = %s\n\n", line);
 	return (line);
 }
 
 char	*get_next_line(int fd)
 {
 	char	*line;
-	char	buf[BUFFER_SIZE];
+	char	buf[BUFFER_SIZE + 1];
 	int		red;
 
-	red = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 		return (NULL);
-	line = malloc(10000000 * sizeof(char) + 1);
+	line = malloc(10000000 * sizeof(char));
 	if (!line)
 		return (NULL);
-	while (red != 0)
+	while ((red = read(fd, buf, BUFFER_SIZE)))
 	{
-		red = read(fd, buf, BUFFER_SIZE);
 		if (new_line(buf) == 1)
 		{
-			line = create_line(line, buf, BUFFER_SIZE);
+			line = create_line(line, buf);
 			break ;
 		}
 		else if (new_line(buf) == 0)
-			line = create_line(line, buf, BUFFER_SIZE);
+			line = create_line(line, buf);
 	}
 	return (line);
 }
@@ -143,6 +140,9 @@ int	main(int argc, char **argv)
 			printf ("%s", gob);
 		}
 		free (gob);*/
+		printf ("%s\n", get_next_line(fd));
+		printf ("%s", get_next_line(fd));
+		/*printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
@@ -157,10 +157,7 @@ int	main(int argc, char **argv)
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
+		printf ("%s", get_next_line(fd));*/
 	}
 	return (0);
 }
