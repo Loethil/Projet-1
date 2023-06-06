@@ -15,6 +15,16 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int	ft_strlen(char *len)
+{
+	int	i;
+
+	i = 0;
+	while (len[i])
+		i++;
+	return (i);
+}
+
 int	new_line(char *buf)
 {
 	int	r;
@@ -35,17 +45,15 @@ char	*check_pile(char *line, char *tmp)
 
 	a = 0;
 	//printf ("tmp = %s\n", tmp);
-	if (tmp && tmp[a])
+	if (tmp == NULL)
+		return (line);
+	while (tmp[a] != '\0')
 	{
-		while (tmp[a])
-		{
-			line[a] = tmp[a];
-			if (tmp[a] == '\0')
-				free (tmp);
-			a++;
-		}
-		line[a] = '\0';
+		line[a] = tmp[a];
+		a++;
 	}
+	line[a] = '\0';
+	free (tmp);
 	return (line);
 }
 
@@ -68,7 +76,7 @@ char	*create_pile(char *line, char *tmp)
 
 	e = 0;
 	v = 0;
-	tmp = malloc (10000000 * sizeof(char));
+	tmp = malloc ((ft_strlen(line) + 1) * sizeof (char));
 	if (!tmp)
 		return (NULL);
 	while (line[v] != '\n')
@@ -79,27 +87,18 @@ char	*create_pile(char *line, char *tmp)
 	return (tmp);
 }
 
-char	*create_line(char *line, char *buf, char **tmp)
+char	*normal_line(char *line, char *buf)
 {
-	int			r;
-	int			a;
+	int	r;
+	int	a;
 
 	r = 0;
 	a = 0;
-	//printf(" 89 tmp = %s", tmp);
-	line = check_pile(line, *tmp);
 	while (line[a])
 		a++;
 	while (buf[r])
 		line[a++] = buf[r++];
 	line[a] = '\0';
-	if (new_line(line) == 1)
-	{
-		*tmp = create_pile(line, *tmp);
-		line = change_line(line);
-	}
-	//printf("100 line = %s\n\n", line);
-	//printf("TMP = %s\n", tmp);
 	return (line);
 }
 
@@ -116,19 +115,23 @@ char	*get_next_line(int fd)
 	line = malloc(10000000 * sizeof(char));
 	if (!line)
 		return (NULL);
+	line = check_pile(line, tmp);
+	if (new_line(line) == 1)
+	{
+		tmp = create_pile(line, tmp);
+		line = change_line(line);
+		return (line);
+	}
 	while (red != 0)
 	{
-		if (new_line(line) == 1)
-			return (line);
 		red = read(fd, buf, BUFFER_SIZE);
-		if (new_line(buf) == 1)
+		line = normal_line(line, buf);
+		if (new_line(line) == 1)
 		{
-			line = create_line(line, buf, &tmp);
-			break ;
+			tmp = create_pile(line, tmp);
+			line = change_line(line);
+			return (line);
 		}
-		else if (new_line(buf) == 0)
-			line = create_line(line, buf, &tmp);
-		//printf("tmp = %s", tmp);
 	}
 	return (line);
 }
@@ -148,9 +151,6 @@ int	main(int argc, char **argv)
 			printf ("%s", gob);
 		}
 		free (gob);*/
-		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
-		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
 		printf ("%s", get_next_line(fd));
