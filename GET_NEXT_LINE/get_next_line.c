@@ -58,15 +58,13 @@ char	*ft_strjoin(char const *temp, char const *buf)
 	return (tab);
 }
 
-char	*choose (char	*line, int d)
+char	*choose(char *line, int d, int r, int a)
 {
-	int	r = 0;
-	int	a = 0;
 	char	*tmp;
 
 	if (d == 1)
 	{
-		while (*line && line[r] && line[r] != '\n')
+		while (*line && line[r] != '\n' && line[r])
 			r++;
 		line[++r] = '\0';
 		return (line);
@@ -76,7 +74,7 @@ char	*choose (char	*line, int d)
 		tmp = malloc(sizeof(char) * 10000000);
 		if (!tmp)
 			return (NULL);
-		while (*line && line[r] && line[r] != '\n')
+		while (*line && line[r] != '\n' && line[r] != '\0')
 			r++;
 		while (*line && line[++r] != '\0')
 			tmp[a++] = line[r];
@@ -87,6 +85,34 @@ char	*choose (char	*line, int d)
 	}
 	return (line);
 }
+
+char	*superstock(char *stk)
+{
+	int	v;
+	int	e;
+	int	n;
+	char	*tab;
+
+	v = 0;
+	e = 0;
+	tab = malloc (ft_strlen(stk) * sizeof(char));
+	while (*stk && stk[e])
+	{
+		tab[e] = stk[e];
+		e++;
+	}
+	stk = NULL;
+	while (*tab && tab[v] != '\n')
+		v++;
+	n = v;
+	e = 0;
+	while (*tab && tab[++n])
+		stk[e++] = tab[n];
+	stk[e] = 0;
+	tab[++v] = 0;
+	return (tab);
+}
+
 char	*get_next_line(int fd)
 {
 	char	buf[BUFFER_SIZE + 1];
@@ -95,30 +121,37 @@ char	*get_next_line(int fd)
 	static char	*stk;
 	char		*temp;
 
+	red = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 		return (NULL);
 	stk = malloc(10000000 * sizeof(char));
+	if (red == 0 && *stk)
+	{
+		temp = choose(stk, 2, 0, 0);
+		line = choose(stk, 1, 0, 0);
+		stk = temp;
+		temp = NULL;
+		free (temp);
+	}
 	while (red > 0)
 	{
 		red = read(fd, buf, BUFFER_SIZE);
 		buf[red] = '\0';
-		temp = stk;
-		stk = ft_strjoin(temp, buf);
-		free (temp);
+		stk = ft_strjoin(stk, buf);
 		if (new_line(stk) == 1)
 			break;
 	}
-	line = choose(stk, 1);
-	temp = stk;
-	stk = choose(temp, 2);
-	free (temp);
-	if (red == 0)
+	if (red == 0 && !(*stk))
 	{
-		free (line);
+		//free (line);
 		line = NULL;
 		return (NULL);
-		
 	}
+	temp = choose(stk, 2, 0, 0);
+	line = choose(stk, 1, 0, 0);
+	stk = temp;
+	temp = NULL;
+	free (temp);
 	return (line);
 }
 
