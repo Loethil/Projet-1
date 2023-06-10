@@ -39,29 +39,29 @@ int	new_line(char *buf)
 	return (0);
 }
 
-char	*ft_strjoin(char const *temp, char const *buf)
+void	ft_strcat(char *dst, const char *src)
 {
-	char	*tab;
-	int		r;
-	int		a;
+	size_t	i;
+	size_t	k;
 
-	tab = (char *)malloc ((ft_strlen(temp) + ft_strlen(buf) + 1) * sizeof (char));
-	if (!tab)
-		return (NULL);
-	r = -1;
-	a = -1;
-	while (temp[++r])
-		tab[r] = temp[r];
-	while (buf[++a])
-		tab[r++] = buf[a];
-	tab[r] = '\0';
-	return (tab);
+	i = 0;
+	k = 0;
+	while (dst[i])
+		i++;
+	while (src[k])
+	{
+		dst[i + k] = src[k];
+		k++;
+	}
+	dst[i + k] = 0;
 }
 
 char	*choose(char *line, int d, int r, int a)
 {
 	char	*tmp;
 
+	if (line == NULL)
+		return (line);
 	if (d == 1)
 	{
 		while (*line && line[r] != '\n' && line[r])
@@ -71,106 +71,80 @@ char	*choose(char *line, int d, int r, int a)
 	}
 	else if (d == 2)
 	{
-		tmp = malloc(sizeof(char) * 10000000);
+		tmp = malloc(sizeof(char) * 2147478364);
 		if (!tmp)
 			return (NULL);
 		while (*line && line[r] != '\n' && line[r] != '\0')
 			r++;
-		while (*line && line[++r] != '\0')
+		while (line[r] && line[++r] != '\0')
 			tmp[a++] = line[r];
 		tmp[a] = '\0';
-		line = tmp;
-		free (tmp);
-		return (line);
+		return (tmp);
 	}
 	return (line);
 }
 
-char	*superstock(char *stk)
-{
-	int	v;
-	int	e;
-	int	n;
-	char	*tab;
-
-	v = 0;
-	e = 0;
-	tab = malloc (ft_strlen(stk) * sizeof(char));
-	while (*stk && stk[e])
-	{
-		tab[e] = stk[e];
-		e++;
-	}
-	stk = NULL;
-	while (*tab && tab[v] != '\n')
-		v++;
-	n = v;
-	e = 0;
-	while (*tab && tab[++n])
-		stk[e++] = tab[n];
-	stk[e] = 0;
-	tab[++v] = 0;
-	return (tab);
-}
-
 char	*get_next_line(int fd)
 {
-	char	buf[BUFFER_SIZE + 1];
+	static char		*stk;
+	char			*buf;
+	char			*line;
+	char			*temp;
 	int		red;
-	char		*line;
-	static char	*stk;
-	char		*temp;
 
 	red = 1;
+	buf = malloc (2147478364 * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
-		return (NULL);
-	stk = malloc(10000000 * sizeof(char));
-	if (red == 0 && *stk)
 	{
-		temp = choose(stk, 2, 0, 0);
-		line = choose(stk, 1, 0, 0);
-		stk = temp;
-		temp = NULL;
-		free (temp);
+		free (buf);
+		return (NULL);
 	}
+	if (stk == NULL)
+	{
+		stk = malloc(2147478364 * sizeof(char));
+		stk[0] = 0;
+	}
+	if (!stk)
+		return (NULL);
 	while (red > 0)
 	{
 		red = read(fd, buf, BUFFER_SIZE);
 		buf[red] = '\0';
-		stk = ft_strjoin(stk, buf);
+		ft_strcat(stk, buf);
 		if (new_line(stk) == 1)
 			break;
 	}
+	free (buf);
 	if (red == 0 && !(*stk))
 	{
-		//free (line);
-		line = NULL;
+		free (stk);
+		stk = NULL;
 		return (NULL);
 	}
 	temp = choose(stk, 2, 0, 0);
 	line = choose(stk, 1, 0, 0);
 	stk = temp;
-	temp = NULL;
-	free (temp);
+	// printf("steak = %s\n", stk);
 	return (line);
 }
 
-int	main(int argc, char **argv)
-{
-	int	fd;
-	char	*gob;
+// int	main(int argc, char **argv)
+// {
+// 	int	fd;
+// 	char	*gob;
 
-	//gob = malloc(10000000 * sizeof(char));
-	if (argc > 1)
-	{
-		fd = open(argv[1], O_RDONLY);
-		gob = get_next_line(fd);
-		while (gob != NULL)
-		{
-			printf ("%s", gob);
-			free (gob);
-			gob = get_next_line(fd);
-		}
-	}
-	return (0);
-}
+// 	//gob = malloc(10000000 * sizeof(char));
+// 	if (argc > 1)
+// 	{
+// 		fd = open(argv[1], O_RDONLY);
+// 		gob = get_next_line(fd);
+// 		while (gob != NULL)
+// 		{
+// 			printf ("%s", gob);
+// 			free (gob);
+// 			gob = get_next_line(fd);
+// 		}
+// 		gob = get_next_line(fd);
+// 	}
+// 	return (0);
+// }
