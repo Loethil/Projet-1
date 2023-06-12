@@ -19,11 +19,17 @@
 # include <string.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif 
 
+void	ft_strcat(char *dst, const char *src);
 char	*get_next_line(int fd);
+int		ft_strlen(const char *len);
+int		new_line(char *buf);
 
 #endif

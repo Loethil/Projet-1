@@ -15,47 +15,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int	ft_strlen(const char *len)
-{
-	int	i;
-
-	i = 0;
-	while (len[i])
-		i++;
-	return (i);
-}
-
-int	new_line(char *buf)
-{
-	int	r;
-
-	r = 0;
-	while (buf[r] != '\0')
-	{
-		if (buf[r] == '\n')
-			return (1);
-		r++;
-	}
-	return (0);
-}
-
-void	ft_strcat(char *dst, const char *src)
-{
-	size_t	i;
-	size_t	k;
-
-	i = 0;
-	k = 0;
-	while (dst[i])
-		i++;
-	while (src[k])
-	{
-		dst[i + k] = src[k];
-		k++;
-	}
-	dst[i + k] = 0;
-}
-
 char	*choose(char *line, int d, int r, int a)
 {
 	char	*tmp;
@@ -84,13 +43,33 @@ char	*choose(char *line, int d, int r, int a)
 	return (line);
 }
 
+char	*readplswait(char *buf, int fd, char *stk, int red)
+{
+	while (red > 0)
+	{
+		red = read(fd, buf, BUFFER_SIZE);
+		buf[red] = '\0';
+		ft_strcat(stk, buf);
+		if (new_line(stk) == 1)
+			break ;
+	}
+	free (buf);
+	if (red == 0 && !(*stk))
+	{
+		free (stk);
+		stk = NULL;
+		return (NULL);
+	}
+	return (stk);
+}
+
 char	*get_next_line(int fd)
 {
 	static char		*stk;
 	char			*buf;
 	char			*line;
 	char			*temp;
-	int		red;
+	int				red;
 
 	red = 1;
 	buf = malloc (2147478364 * sizeof(char));
@@ -106,25 +85,10 @@ char	*get_next_line(int fd)
 	}
 	if (!stk)
 		return (NULL);
-	while (red > 0)
-	{
-		red = read(fd, buf, BUFFER_SIZE);
-		buf[red] = '\0';
-		ft_strcat(stk, buf);
-		if (new_line(stk) == 1)
-			break;
-	}
-	free (buf);
-	if (red == 0 && !(*stk))
-	{
-		free (stk);
-		stk = NULL;
-		return (NULL);
-	}
+	stk = readplswait(buf, fd, stk, red);
 	temp = choose(stk, 2, 0, 0);
 	line = choose(stk, 1, 0, 0);
 	stk = temp;
-	// printf("steak = %s\n", stk);
 	return (line);
 }
 
