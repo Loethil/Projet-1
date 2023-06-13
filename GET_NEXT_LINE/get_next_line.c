@@ -91,24 +91,3 @@ char	*get_next_line(int fd)
 	stk = temp;
 	return (line);
 }
-
-// int	main(int argc, char **argv)
-// {
-// 	int	fd;
-// 	char	*gob;
-
-// 	//gob = malloc(10000000 * sizeof(char));
-// 	if (argc > 1)
-// 	{
-// 		fd = open(argv[1], O_RDONLY);
-// 		gob = get_next_line(fd);
-// 		while (gob != NULL)
-// 		{
-// 			printf ("%s", gob);
-// 			free (gob);
-// 			gob = get_next_line(fd);
-// 		}
-// 		gob = get_next_line(fd);
-// 	}
-// 	return (0);
-// }
