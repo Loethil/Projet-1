@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_atoi(const char *str)
 {
@@ -36,4 +37,12 @@ int	ft_atoi(const char *str)
 		return (-res);
 	else
 		return (res);
+}
+
+int	main(void)
+{
+	char	*tab = "58456";
+	
+	printf("%d\n", ft_atoi(tab));
+	return (0);
 }
