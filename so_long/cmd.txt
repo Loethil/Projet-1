@@ -1,0 +1,1 @@
+gcc test.c get_next_line.c get_next_line_utils.c -Wall -W -Werror -L. -lmlx -lXext -lX11
