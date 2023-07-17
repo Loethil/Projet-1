@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mbatteux <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 16:17:53 by mbatteux          #+#    #+#             */
-/*   Updated: 2023/06/19 16:17:54 by mbatteux         ###   ########.fr       */
+/*   Created: 2023/07/17 15:34:19 by mbatteux          #+#    #+#             */
+/*   Updated: 2023/07/17 15:34:20 by mbatteux         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mlx.h"
-#include "get_next_line.h"
+#include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 
