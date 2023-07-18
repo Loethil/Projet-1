@@ -12,9 +12,9 @@
 
 NAME = so_long
 
-OOO = so_long.o
+OOO = so_long.o so_long_map.o
 
-CCC = so_long.c
+CCC = so_long.c so_long_map.c
 
 FLAG = -Wall -Wextra -Werror
 
