@@ -69,34 +69,32 @@ void	show_square(t_data *img, int lon, int lar, char **firstlinemap)
 	}
 }
 
-void	show_map_in_pixel(char **map, t_data *img)
+void	show_map_in_pixel(t_data *img)
 {
 	int	lon = 0;
 	int	lar = 0;
 	int	xmap = 0;
 	int	ymap = 0;
-	int	p;
-	int	e;
 
-	while (map[ymap] != NULL)
+	while (img->map[ymap] != NULL)
 	{
-		if (map[ymap][xmap] == '1')
-			show_square(img, lon, lar, map);
-		lon += find_pixel_lenght(map);
+		if (img->map[ymap][xmap] == '1')
+			show_square(img, lon, lar, img->map);
+		lon += find_pixel_lenght(img->map);
 		xmap++;
-		if (map[ymap][xmap] == 'P')
+		if (img->map[ymap][xmap] == 'P')
 		{
-			e = xmap;
-			p = ymap;
+			img->Px = xmap;
+			img->Py = ymap;
 		}
-		else if (map[ymap][xmap] == '\0')
+		else if (img->map[ymap][xmap] == '\0')
 		{
 			lon = 0;
 			xmap = 0;
-			lar += find_pixel_lenght(map);
+			lar += find_pixel_lenght(img->map);
 			ymap++;
 		}
 	}
 	mlx_put_image_to_window(img->mlx, img->win_ptr, img->img, 0, 0);	
-	show_people(*img, e, p);
+	show_people(img);
 }

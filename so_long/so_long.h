@@ -18,6 +18,11 @@
 #include "mlx_int.h"
 #include <stdio.h>
 #include <stdlib.h>
+#define LEFT 65363
+#define RIGHT 65361
+#define UP 65362
+#define DOWN 65364
+#define ESC 65307
 
 typedef	struct	s_data 
 {
@@ -31,13 +36,19 @@ typedef	struct	s_data
 	int	line_lenght;
 	int	endian;
 	int	pixel_lenght;
+	int	Px;
+	int	Py;
 }		t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	show_square(t_data *img, int lon, int lar, char **firstlinemap);
-void	show_map_in_pixel(char **map, t_data *img);
-char	**stock_map_ber(char **map, char *argv);
-int	escape(int key);
+void	show_map_in_pixel(t_data *img);
+void	show_people(t_data *img);
+void	horizontal(t_data *img, char **map, int *Px, int *Py, int key);
+void	vertical(t_data *img, int key);
+int	movement(t_data *img, int key);
+int	deal_key(int key, t_data *img);
 int	find_pixel_lenght(char **line);
-void	show_people(t_data img, int larg, int lon);
+int	checkwall(t_data *img, int key);
+char	**stock_map_ber(char **map, char *argv);
 #endif
