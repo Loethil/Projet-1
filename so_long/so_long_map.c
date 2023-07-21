@@ -30,6 +30,7 @@ int	find_pixel_lenght(char **line)
 		return (480 / howmanyline);
 	return (640 / linelen);
 }
+
 char	**stock_map_ber(char **map, char *argv)
 {
 	int	fd;

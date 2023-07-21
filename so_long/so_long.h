@@ -18,8 +18,8 @@
 #include "mlx_int.h"
 #include <stdio.h>
 #include <stdlib.h>
-#define LEFT 65363
-#define RIGHT 65361
+#define LEFT 65361
+#define RIGHT 65363
 #define UP 65362
 #define DOWN 65364
 #define ESC 65307
@@ -44,8 +44,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	show_square(t_data *img, int lon, int lar, char **firstlinemap);
 void	show_map_in_pixel(t_data *img);
 void	show_people(t_data *img);
-void	horizontal(t_data *img, char **map, int *Px, int *Py, int key);
 void	vertical(t_data *img, int key);
+void	horizontal(t_data *img, int key);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	find_pixel_lenght(char **line);

@@ -29,7 +29,9 @@ int	deal_key(int key, t_data *img)
 	printf ("touche = %d\n", key);
 	if (key == ESC)
 		exit (0);
-	else if (key == UP)
+	else if (key == UP || key == DOWN)
+		movement(img, key);
+	else if (key == LEFT || key == RIGHT)
 		movement(img, key);
 	return (0);
 }
@@ -40,60 +42,9 @@ void	show_people(t_data *img)
 	int	img_larg;
 	int	img_long;
 
-	people = "./people.xpm";
+	people = "./Idle.xpm";
 	img->charac = mlx_xpm_file_to_image(img->mlx, people, &img_larg, &img_long);
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (img->Px * img->pixel_lenght) + img->pixel_lenght / 2, (img->Py * img->pixel_lenght) + img->pixel_lenght / 2);
-}
-
-int	movement(t_data *img, int key)
-{
-	// if (key == LEFT || key == RIGHT)
-	// {
-	// 	if (checkwall(map, Px, Py, key) == 0)
-	// 		horizontal(img, map, Px, Py, key);
-	// 	else
-	// 		return (0);
-	// }
-	if (key == UP || key == DOWN)
-	{
-		if (checkwall(img, key) == 0)
-			vertical(img, key);
-		else
-			return (0);
-	}
-	return (0);
-}
-
-void	vertical(t_data *img, int key)
-{
-	if (key == UP)
-	{
-		img->map[img->Py][img->Px] = '0';
-		img->map[--(img->Py)][img->Px] = 'P';
-	}
-	else if (key == DOWN)
-	{
-		img->map[img->Py][img->Px] = '0';
-		img->map[++(img->Py)][img->Px] = 'P';
-	}
-	show_map_in_pixel(img);
-}
-
-int	checkwall(t_data *img, int key)
-{
-	if (key == UP)
-		if (img->map[img->Py - 1][img->Px] == '1')
-			return (1);		
-	if (key == DOWN)
-		if (img->map[img->Py + 1][img->Px] == '1')
-			return (1);
-	if (key == RIGHT)
-		if (img->map[img->Py][img->Px + 1] == '1')
-			return (1);
-	if (key == LEFT)
-		if (img->map[img->Py][img->Px - 1] == '1')
-			return (1);
-	return (0);
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (img->Px * img->pixel_lenght) /*+ img->pixel_lenght / 2*/, (img->Py * img->pixel_lenght) /*+ img->pixel_lenght / 2*/);
 }
 
 int	main(int argc, char **argv)
