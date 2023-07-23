@@ -14,6 +14,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int	deal_key(int key, t_data *img)
+{
+	printf ("touche = %d\n", key);
+	if (key == ESC)
+		exit (0);
+	else if (key == UP || key == DOWN)
+		movement(img, key);
+	else if (key == LEFT || key == RIGHT)
+		movement(img, key);
+	return (0);
+}
+
 int	movement(t_data *img, int key)
 {
 	if (key == LEFT || key == RIGHT)
@@ -30,6 +42,12 @@ int	movement(t_data *img, int key)
 		else
 			return (0);
 	}
+	// for (int i = 0; img->map[i]; i++)
+	// {
+	// 	for(int j = 0; img->map[i][j]; j++)
+	// 		printf("%c", img->map[i][j]);
+	// }
+	find_exit(img);
 	return (0);
 }
 

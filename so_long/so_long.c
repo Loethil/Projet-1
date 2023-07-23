@@ -24,27 +24,46 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-int	deal_key(int key, t_data *img)
+void	show_charac(t_data *img)
 {
-	printf ("touche = %d\n", key);
-	if (key == ESC)
-		exit (0);
-	else if (key == UP || key == DOWN)
-		movement(img, key);
-	else if (key == LEFT || key == RIGHT)
-		movement(img, key);
-	return (0);
-}
-
-void	show_people(t_data *img)
-{
-	char	*people;
+	char	*charac;
 	int	img_larg;
 	int	img_long;
 
-	people = "./Idle.xpm";
-	img->charac = mlx_xpm_file_to_image(img->mlx, people, &img_larg, &img_long);
+	charac = "./sprite/Idle.xpm";
+	img->charac = mlx_xpm_file_to_image(img->mlx, charac, &img_larg, &img_long);
 	mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (img->Px * img->pixel_lenght) /*+ img->pixel_lenght / 2*/, (img->Py * img->pixel_lenght) /*+ img->pixel_lenght / 2*/);
+}
+
+void	show_exit(t_data *img)
+{
+	char	*exit;
+	int	exit_larg;
+	int	exit_long;
+
+	exit = "./sprite/people.xpm";
+	img->exit = mlx_xpm_file_to_image(img->mlx, exit, &exit_larg, &exit_long);
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->exit, (img->Ex * img->pixel_lenght), (img->Ey * img->pixel_lenght));
+}
+
+void	find_exit(t_data *img)
+{
+	int	i = 0;
+	int	j = 0;
+	int	e = 0;
+	while(img->map[i] != NULL)
+	{
+		if (img->map[i][j] == 'E')
+			e = 1;
+		else if (img->map[i][j] == 0)
+		{
+			j = 0;
+			i++;
+		}
+		j++;
+	}
+	if (e == 0)
+		exit (0);
 }
 
 int	main(int argc, char **argv)
@@ -55,8 +74,11 @@ int	main(int argc, char **argv)
 	{
 		img.map = malloc(10000000 * sizeof(char *));
 		img.mlx = mlx_init();
-		img.win_ptr = mlx_new_window(img.mlx, 1920, 1080, "so_long");
-		img.img = mlx_new_image(img.mlx, 1920, 1080);
+		find_resolution(&img);
+		// printf("%d", img.ResoX);
+		// printf("%d", img.ResoY);
+		img.win_ptr = mlx_new_window(img.mlx, /*(img.ResoX * 80)*/1840, /*(img.ResoY * 80)*/960, "so_long");
+		img.img = mlx_new_image(img.mlx, /*(img.ResoX * 80)*/1840, /*(img.ResoY * 80)*/960);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_lenght,
 							&img.endian);
 		img.map = stock_map_ber(img.map, argv[1]);
