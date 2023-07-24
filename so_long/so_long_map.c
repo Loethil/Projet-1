@@ -23,8 +23,8 @@ void	find_resolution(t_data *img)
 		(img->ResoX)++;
 	while (img->map[img->ResoY])
 		(img->ResoY)++;
-	// printf("%d", img->ResoX);
-	// printf("%d", img->ResoY);
+	img->ResoX = img->ResoX * PIXELPERFECT;
+	img->ResoY = img->ResoY * PIXELPERFECT;
 }
 
 char	**stock_map_ber(char **map, char *argv)
@@ -50,7 +50,7 @@ void	show_square(t_data *img, int lon, int lar)
 	
 	cubex = 0;
 	cubey = 0;
-	img->pixel_lenght = 80;
+	img->pixel_lenght = PIXELPERFECT;
 	// printf("%d\n", img->pixel_lenght);
 	while (cubey < img->pixel_lenght)
 	{	
@@ -78,7 +78,7 @@ void	show_map_in_pixel(t_data *img)
 	{
 		if (img->map[ymap][xmap] == '1')
 			show_square(img, lon, lar);
-		lon += 80;
+		lon += PIXELPERFECT;
 		xmap++;
 		if (img->map[ymap][xmap] == 'P')
 		{
@@ -94,7 +94,7 @@ void	show_map_in_pixel(t_data *img)
 		{
 			lon = 0;
 			xmap = 0;
-			lar += 80;
+			lar += PIXELPERFECT;
 			ymap++;
 		}
 	}

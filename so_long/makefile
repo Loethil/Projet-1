@@ -12,9 +12,9 @@
 
 NAME = so_long
 
-OOO = so_long.o so_long_map.o so_long_movement.o
+OOO = so_long.o so_long_map.o so_long_movement.o show_smth.o get_next_line_utils.o get_next_line.o
 
-CCC = so_long.c so_long_map.c so_long_movement.c
+CCC = so_long.c so_long_map.c so_long_movement.c show_smth.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 
 FLAG = -Wall -Wextra -Werror
 
@@ -25,9 +25,9 @@ LIBINCLUDE = -Lminilibx-linux -lmlx_Linux -I minilibx-linux -lXext -lX11
 all: $(NAME)
 
 $(NAME): .c.o
-	gcc $(OOO) $(FLAG) $(GET_NEXT_LINE) $(LIBINCLUDE) -o $(NAME) -g3
+	gcc $(OOO) $(FLAG) $(LIBINCLUDE) -o $(NAME) -g3
 .c.o :
-	gcc -c $(CCC) $(GET_NEXT_LINE) $(FLAG) $(LIBINCLUDE) -g3
+	gcc -c $(CCC) $(FLAG) $(LIBINCLUDE) -g3
 clean:
 	rm -f $(OOO)
 fclean: clean

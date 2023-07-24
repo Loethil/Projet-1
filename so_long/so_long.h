@@ -23,6 +23,7 @@
 #define UP 119
 #define DOWN 115
 #define ESC 65307
+#define PIXELPERFECT 80
 
 typedef	struct	s_data 
 {
@@ -49,9 +50,9 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	show_square(t_data *img, int lon, int lar);
 void	show_map_in_pixel(t_data *img);
 void	show_charac(t_data *img);
+void	show_exit(t_data *img);
 void	vertical(t_data *img, int key);
 void	horizontal(t_data *img, int key);
-void	show_exit(t_data *img);
 void	find_exit(t_data *img);
 void	find_resolution(t_data *img);
 int	movement(t_data *img, int key);
