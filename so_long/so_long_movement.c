@@ -42,11 +42,6 @@ int	movement(t_data *img, int key)
 		else
 			return (0);
 	}
-	// for (int i = 0; img->map[i]; i++)
-	// {
-	// 	for(int j = 0; img->map[i][j]; j++)
-	// 		printf("%c", img->map[i][j]);
-	// }
 	find_exit(img);
 	return (0);
 }
@@ -85,7 +80,7 @@ int	checkwall(t_data *img, int key)
 {
 	if (key == UP)
 		if (img->map[img->Py - 1][img->Px] == '1')
-			return (1);		
+			return (1);
 	if (key == DOWN)
 		if (img->map[img->Py + 1][img->Px] == '1')
 			return (1);

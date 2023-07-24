@@ -43,62 +43,26 @@ char	**stock_map_ber(char **map, char *argv)
 	return (map);
 }
 
-void	show_square(t_data *img, int lon, int lar)
-{
-	int	cubex;
-	int	cubey;
-	
-	cubex = 0;
-	cubey = 0;
-	img->pixel_lenght = PIXELPERFECT;
-	// printf("%d\n", img->pixel_lenght);
-	while (cubey < img->pixel_lenght)
-	{	
-		while (cubex < img->pixel_lenght)
-		{
-			my_mlx_pixel_put(img, lon, lar, 0x00FFFFFF);
-			cubex++;
-			lon++;
-		}
-		lar++;
-		lon -= cubex;
-		cubex = 0;
-		cubey++;
-	}
-}
-
 void	show_map_in_pixel(t_data *img)
 {
-	int	lon = 0;
-	int	lar = 0;
 	int	xmap = 0;
 	int	ymap = 0;
 
 	while (img->map[ymap] != NULL)
 	{
-		if (img->map[ymap][xmap] == '1')
-			show_square(img, lon, lar);
-		lon += PIXELPERFECT;
-		xmap++;
-		if (img->map[ymap][xmap] == 'P')
-		{
-			img->Px = xmap;
-			img->Py = ymap;
-		}
+		if (img->map[ymap][xmap] == '0')
+			show_tiles(img, xmap, ymap);
+		else if (img->map[ymap][xmap] == '1')
+			show_wall(img, xmap, ymap);
+		else if (img->map[ymap][xmap] == 'P')
+			show_charac(img, xmap, ymap);
 		else if (img->map[ymap][xmap] == 'E')
+			show_exit(img ,xmap, ymap);
+		xmap++;
+		if (img->map[ymap][xmap] == '\0')
 		{
-			img->Ex = xmap;
-			img->Ey = ymap;
-		}
-		else if (img->map[ymap][xmap] == '\0')
-		{
-			lon = 0;
 			xmap = 0;
-			lar += PIXELPERFECT;
 			ymap++;
 		}
 	}
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->img, 0, 0);	
-	show_charac(img);
-	show_exit(img);
 }
