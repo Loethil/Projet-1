@@ -24,6 +24,12 @@
 #define DOWN 115
 #define ESC 65307
 #define PIXELPERFECT 64
+#define CHARAC "./sprite/amongus.xpm"
+#define RCHARAC "./sprite/ramongus.xpm"
+#define EXIT "./sprite/Exit.xpm"
+#define WALL "./tiles/wall.xpm"
+#define TILES "./tiles/tiles.xpm"
+#define PET "./pet/Didine.xpm"
 
 typedef	struct	s_data 
 {
@@ -36,28 +42,27 @@ typedef	struct	s_data
 	t_img	*exit;
 	t_img	*tiles;
 	t_img	*wall;
+	t_img	*rcharac;
+	t_img	*pet;
 	int	bits_per_pixel;
 	int	line_lenght;
 	int	endian;
 	int	pixel_lenght;
 	int	Px;
 	int	Py;
-	int	Ex;
-	int	Ey;
-	int	Tx;
-	int	Ty;
-	int	Wx;
-	int	Wy;
+	int	sens;
 	int	ResoX;
 	int	ResoY;
 }		t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void	texture_init(t_data *img);
 void	show_map_in_pixel(t_data *img);
 void	show_tiles(t_data *img, int xmap, int ymap);
 void	show_wall(t_data *img, int xmap, int ymap);
 void	show_charac(t_data *img, int xmap, int ymap);
 void	show_exit(t_data *img, int xmap, int ymap);
+void	show_pet(t_data *img, int xmap, int ymap);
 void	vertical(t_data *img, int key);
 void	horizontal(t_data *img, int key);
 void	find_exit(t_data *img);

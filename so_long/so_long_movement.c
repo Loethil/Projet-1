@@ -65,13 +65,23 @@ void	horizontal(t_data *img, int key)
 {
 	if (key == LEFT)
 	{
-		img->map[img->Py][img->Px] = '0';
-		img->map[img->Py][--(img->Px)] = 'P';
+		if (img->sens == LEFT)
+		{
+			img->map[img->Py][img->Px] = '0';
+			img->map[img->Py][--(img->Px)] = 'P';
+		}
+		else
+			img->sens = LEFT;
 	}
 	else if (key == RIGHT)
 	{
-		img->map[img->Py][img->Px] = '0';
-		img->map[img->Py][++(img->Px)] = 'P';
+		if (img->sens == RIGHT)
+		{
+			img->map[img->Py][img->Px] = '0';
+			img->map[img->Py][++(img->Px)] = 'P';
+		}
+		else
+			img->sens = RIGHT;
 	}
 	show_map_in_pixel(img);
 }

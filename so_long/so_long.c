@@ -16,26 +16,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	find_exit(t_data *img)
-{
-	int	i = 0;
-	int	j = 0;
-	int	e = 0;
-	while(img->map[i] != NULL)
-	{
-		if (img->map[i][j] == 'E')
-			e = 1;
-		else if (img->map[i][j] == 0)
-		{
-			j = 0;
-			i++;
-		}
-		j++;
-	}
-	if (e == 0)
-		exit (0);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data	img;
@@ -48,11 +28,13 @@ int	main(int argc, char **argv)
 		img.mlx = mlx_init();
 		img.win_ptr = mlx_new_window(img.mlx, img.ResoX, img.ResoY, "so_long");
 		img.img = mlx_new_image(img.mlx, img.ResoX, img.ResoY);
+		texture_init(&img);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_lenght,
 							&img.endian);
 		show_map_in_pixel(&img);
 		mlx_hook(img.win_ptr, 2, 1, deal_key, &img);
 		mlx_loop(img.mlx);
+		free(img.map);
 	}
 	return (0);
 }
