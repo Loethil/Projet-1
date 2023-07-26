@@ -53,6 +53,8 @@ typedef	struct	s_data
 	int	sens;
 	int	ResoX;
 	int	ResoY;
+	int	nb_conso;
+	int	Pconso;
 }		t_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
@@ -70,5 +72,7 @@ void	find_resolution(t_data *img);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	checkwall(t_data *img, int key);
+int	checkexit(t_data *img, int key);
+int	howmanyconso(t_data *img);
 char	**stock_map_ber(char **map, char *argv);
 #endif

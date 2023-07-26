@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 		texture_init(&img);
 		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_lenght,
 							&img.endian);
+		howmanyconso(&img);
 		show_map_in_pixel(&img);
 		mlx_hook(img.win_ptr, 2, 1, deal_key, &img);
 		mlx_loop(img.mlx);

@@ -27,26 +27,6 @@ void	find_resolution(t_data *img)
 	img->ResoY = img->ResoY * PIXELPERFECT;
 }
 
-void	find_exit(t_data *img)
-{
-	int	i = 0;
-	int	j = 0;
-	int	e = 0;
-	while(img->map[i] != NULL)
-	{
-		if (img->map[i][j] == 'E')
-			e = 1;
-		else if (img->map[i][j] == 0)
-		{
-			j = 0;
-			i++;
-		}
-		j++;
-	}
-	if (e == 0)
-		exit (0);
-}
-
 void	texture_init(t_data *img)
 {
 	int	width;
