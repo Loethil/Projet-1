@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	howmanyconso(t_data *img)
+void	howmanyconso(t_data *img)
 {
 	int	y = 0;
 	int	x = 0;
@@ -33,33 +33,53 @@ int	howmanyconso(t_data *img)
 		}
 		x++;
 	}
-	return(img->nb_conso);
+	img->intetoile = malloc((img->nb_conso + 1) * sizeof(int));
+	if (!img->intetoile)
+		return ;
+	x = 0;
+	while (x < img->nb_conso)
+		img->intetoile[x++] = rand() % 10;
 }
 
-// void	find_exit(t_data *img)
-// {
-// 	int	y = 0;
-// 	int	x = 0;
-// 	int	e = 0;
-// 	while(img->map[y] != NULL)
-// 	{
-// 		if (img->map[y][x] == 'E')
-// 			e = 1;
-// 		if (img->map[y][x] == 0)
-// 		{
-// 			x = 0;
-// 			y++;
-// 		}
-// 		x++;
-// 	}
-// 	if (e == 0 && img->Pconso == img->nb_conso)
-// 		exit (0);
-// }
+void	petsinit(t_data *img)
+{
+	int	width;
+	int	height;
+	
+	img->pets[0] = mlx_xpm_file_to_image(img->mlx, PET1, &width, &height);
+	img->pets[1] = mlx_xpm_file_to_image(img->mlx, PET2, &width, &height);
+	img->pets[2] = mlx_xpm_file_to_image(img->mlx, PET3, &width, &height);
+	img->pets[3] = mlx_xpm_file_to_image(img->mlx, PET4, &width, &height);
+	img->pets[4] = mlx_xpm_file_to_image(img->mlx, PET5, &width, &height);
+	img->pets[5] = mlx_xpm_file_to_image(img->mlx, PET6, &width, &height);
+	img->pets[6] = mlx_xpm_file_to_image(img->mlx, PET7, &width, &height);
+	img->pets[7] = mlx_xpm_file_to_image(img->mlx, PET8, &width, &height);
+	img->pets[8] = mlx_xpm_file_to_image(img->mlx, PET9, &width, &height);
+	img->pets[9] = mlx_xpm_file_to_image(img->mlx, PET10, &width, &height);
+}
+
+void	find_exit(t_data *img)
+{
+	int	y = 0;
+	int	x = 0;
+	int	e = 0;
+	while(img->map[y] != NULL)
+	{
+		if (img->map[y][x] == 'E')
+			e = 1;
+		if (img->map[y][x] == 0)
+		{
+			x = 0;
+			y++;
+		}
+		x++;
+	}
+	if (e == 0)
+		exit (0);
+}
 
 int	checkexit(t_data *img, int key)
 {
-	printf("%d\n", img->Pconso);
-	printf("%d\n", img->nb_conso);
 	if (img->Pconso != img->nb_conso)
 	{
 		if (key == UP)

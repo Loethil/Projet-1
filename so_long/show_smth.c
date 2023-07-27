@@ -48,7 +48,7 @@ void	show_tiles(t_data *img, int xmap, int ymap)
 {
 	mlx_put_image_to_window(img->mlx, img->win_ptr, img->tiles, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
 }
-void	show_pet(t_data *img, int xmap, int ymap)
+void	show_pet(t_data *img, int xmap, int ymap, int c)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->pet, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->pets[img->intetoile[c]], (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
 }

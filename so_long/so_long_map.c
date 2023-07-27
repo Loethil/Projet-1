@@ -32,13 +32,13 @@ void	texture_init(t_data *img)
 	int	width;
 	int	height;
 
+	petsinit(img);
 	img->sens = LEFT;
 	img->charac = mlx_xpm_file_to_image(img->mlx, CHARAC, &width, &height);
 	img->rcharac = mlx_xpm_file_to_image(img->mlx, RCHARAC, &width, &height);
 	img->exit = mlx_xpm_file_to_image(img->mlx, EXIT, &width, &height);
 	img->wall = mlx_xpm_file_to_image(img->mlx, WALL, &width, &height);
 	img->tiles = mlx_xpm_file_to_image(img->mlx, TILES, &width, &height);
-	img->pet = mlx_xpm_file_to_image(img->mlx, PET, &width, &height);
 }
 char	**stock_map_ber(char **map, char *argv)
 {
@@ -60,6 +60,7 @@ void	show_map_in_pixel(t_data *img)
 {
 	int	xmap = 0;
 	int	ymap = 0;
+	int	c = 0;
 
 	while (img->map[ymap] != NULL)
 	{
@@ -72,7 +73,10 @@ void	show_map_in_pixel(t_data *img)
 		else if (img->map[ymap][xmap] == 'E')
 			show_exit(img ,xmap, ymap);
 		else if (img->map[ymap][xmap] == 'C')
-			show_pet(img, xmap, ymap);
+		{
+			show_pet(img, xmap, ymap, c);
+			c++;
+		}
 		xmap++;
 		if (img->map[ymap][xmap] == '\0')
 		{

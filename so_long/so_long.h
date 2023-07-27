@@ -29,7 +29,17 @@
 #define EXIT "./sprite/Exit.xpm"
 #define WALL "./tiles/wall.xpm"
 #define TILES "./tiles/tiles.xpm"
-#define PET "./pet/Didine.xpm"
+#define PET1 "./pet/petain.xpm"
+#define PET2 "./pet/cousoupe.xpm"
+#define PET3 "./pet/Didine.xpm"
+#define PET4 "./pet/Francine.xpm"
+#define PET5 "./pet/groscon.xpm"
+#define PET6 "./pet/kiki.xpm"
+#define PET7 "./pet/Michel.xpm"
+#define PET8 "./pet/ptitecrotte.xpm"
+#define PET9 "./pet/ptitmogus.xpm"
+#define PET10 "./pet/Xavier.xpm"
+
 
 typedef	struct	s_data 
 {
@@ -43,7 +53,8 @@ typedef	struct	s_data
 	t_img	*tiles;
 	t_img	*wall;
 	t_img	*rcharac;
-	t_img	*pet;
+	t_img	*pets[10];
+	int	*intetoile;
 	int	bits_per_pixel;
 	int	line_lenght;
 	int	endian;
@@ -64,15 +75,16 @@ void	show_tiles(t_data *img, int xmap, int ymap);
 void	show_wall(t_data *img, int xmap, int ymap);
 void	show_charac(t_data *img, int xmap, int ymap);
 void	show_exit(t_data *img, int xmap, int ymap);
-void	show_pet(t_data *img, int xmap, int ymap);
-void	vertical(t_data *img, int key);
-void	horizontal(t_data *img, int key);
+void	show_pet(t_data *img, int xmap, int ymap, int c);
+void	vertical(t_data *img, int key, int *counter);
+void	horizontal(t_data *img, int key, int *counter);
 void	find_exit(t_data *img);
 void	find_resolution(t_data *img);
+void	petsinit(t_data *img);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	checkwall(t_data *img, int key);
 int	checkexit(t_data *img, int key);
-int	howmanyconso(t_data *img);
+void	howmanyconso(t_data *img);
 char	**stock_map_ber(char **map, char *argv);
 #endif
