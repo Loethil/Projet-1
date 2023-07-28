@@ -23,23 +23,10 @@ void	find_resolution(t_data *img)
 		(img->ResoX)++;
 	while (img->map[img->ResoY])
 		(img->ResoY)++;
-	img->ResoX = (img->ResoX - 1) * PIXELPERFECT;
-	img->ResoY = img->ResoY * PIXELPERFECT;
+	img->ResoX = (img->ResoX - 1) * P;
+	img->ResoY = img->ResoY * P;
 }
 
-void	texture_init(t_data *img)
-{
-	int	width;
-	int	height;
-
-	petsinit(img);
-	img->sens = LEFT;
-	img->charac = mlx_xpm_file_to_image(img->mlx, CHARAC, &width, &height);
-	img->rcharac = mlx_xpm_file_to_image(img->mlx, RCHARAC, &width, &height);
-	img->exit = mlx_xpm_file_to_image(img->mlx, EXIT, &width, &height);
-	img->wall = mlx_xpm_file_to_image(img->mlx, WALL, &width, &height);
-	img->tiles = mlx_xpm_file_to_image(img->mlx, TILES, &width, &height);
-}
 char	**stock_map_ber(char **map, char *argv)
 {
 	int	fd;
@@ -58,30 +45,25 @@ char	**stock_map_ber(char **map, char *argv)
 
 void	show_map_in_pixel(t_data *img)
 {
-	int	xmap = 0;
-	int	ymap = 0;
-	int	c = 0;
-
-	while (img->map[ymap] != NULL)
+	img->xmap = 0;
+	img->ymap = 0;
+	while (img->map[img->ymap] != NULL)
 	{
-		if (img->map[ymap][xmap] == '0')
-			show_tiles(img, xmap, ymap);
-		else if (img->map[ymap][xmap] == '1')
-			show_wall(img, xmap, ymap);
-		else if (img->map[ymap][xmap] == 'P')
-			show_charac(img, xmap, ymap);
-		else if (img->map[ymap][xmap] == 'E')
-			show_exit(img ,xmap, ymap);
-		else if (img->map[ymap][xmap] == 'C')
+		if (img->map[img->ymap][img->xmap] == '0')
+			show_tiles(img);
+		else if (img->map[img->ymap][img->xmap] == '1')
+			show_wall(img);
+		else if (img->map[img->ymap][img->xmap] == 'P')
+			show_charac(img);
+		else if (img->map[img->ymap][img->xmap] == 'E')
+			show_exit(img);
+		else if (img->map[img->ymap][img->xmap] == 'C')
+			show_pet(img);
+		(img->xmap)++;
+		if (img->map[img->ymap][img->xmap] == '\0')
 		{
-			show_pet(img, xmap, ymap, c);
-			c++;
-		}
-		xmap++;
-		if (img->map[ymap][xmap] == '\0')
-		{
-			xmap = 0;
-			ymap++;
+			img->xmap = 0;
+			(img->ymap)++;
 		}
 	}
 }

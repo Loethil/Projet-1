@@ -16,39 +16,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	show_charac(t_data *img)
 {
-	char	*dst;
-
-	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
-
-void	show_charac(t_data *img, int xmap, int ymap)
-{
-	img->Px = xmap;
-	img->Py = ymap;
+	img->Px = img->xmap;
+	img->Py = img->ymap;
 	if (img->sens == LEFT)
-		mlx_put_image_to_window(img->mlx, img->win_ptr, img->rcharac, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	{
+		mlx_put_image_to_window(img->mlx, img->win_ptr, img->rcharac, (img->xmap * P), (img->ymap * P));
+	}
 	else if (img->sens == RIGHT)
-		mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+		mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (img->xmap * P), (img->ymap * P));
 }
 
-void	show_exit(t_data *img, int xmap, int ymap)
+void	show_exit(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->exit, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->exit, (img->xmap * P), (img->ymap * P));
 }
 
-void	show_wall(t_data *img, int xmap, int ymap)
+void	show_wall(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->wall, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->wall, (img->xmap * P), (img->ymap * P));
 }
 
-void	show_tiles(t_data *img, int xmap, int ymap)
+void	show_tiles(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->tiles, (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->tiles, (img->xmap * P), (img->ymap * P));
 }
-void	show_pet(t_data *img, int xmap, int ymap, int c)
+
+void	show_pet(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->pets[img->intetoile[c]], (xmap * PIXELPERFECT), (ymap * PIXELPERFECT));
+	mlx_put_image_to_window(img->mlx, img->win_ptr, img->pets[1]/*img->pets[img->intetoile[c]]*/, (img->xmap * P), (img->ymap * P));
 }

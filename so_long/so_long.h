@@ -23,7 +23,7 @@
 #define UP 119
 #define DOWN 115
 #define ESC 65307
-#define PIXELPERFECT 64
+#define P 64
 #define CHARAC "./sprite/amongus.xpm"
 #define RCHARAC "./sprite/ramongus.xpm"
 #define EXIT "./sprite/Exit.xpm"
@@ -55,6 +55,8 @@ typedef	struct	s_data
 	t_img	*rcharac;
 	t_img	*pets[10];
 	int	*intetoile;
+	int	xmap;
+	int	ymap;
 	int	bits_per_pixel;
 	int	line_lenght;
 	int	endian;
@@ -71,11 +73,11 @@ typedef	struct	s_data
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	texture_init(t_data *img);
 void	show_map_in_pixel(t_data *img);
-void	show_tiles(t_data *img, int xmap, int ymap);
-void	show_wall(t_data *img, int xmap, int ymap);
-void	show_charac(t_data *img, int xmap, int ymap);
-void	show_exit(t_data *img, int xmap, int ymap);
-void	show_pet(t_data *img, int xmap, int ymap, int c);
+void	show_tiles(t_data *img);
+void	show_wall(t_data *img);
+void	show_charac(t_data *img);
+void	show_exit(t_data *img);
+void	show_pet(t_data *img);
 void	vertical(t_data *img, int key, int *counter);
 void	horizontal(t_data *img, int key, int *counter);
 void	find_exit(t_data *img);
@@ -84,7 +86,8 @@ void	petsinit(t_data *img);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	checkwall(t_data *img, int key);
-int	checkexit(t_data *img, int key);
+int	checkexit_ver(t_data *img, int key);
+int	checkexit_hor(t_data *img, int key);
 void	howmanyconso(t_data *img);
 char	**stock_map_ber(char **map, char *argv);
 #endif

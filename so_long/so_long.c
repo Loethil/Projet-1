@@ -17,6 +17,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_lenght + x * (data->bits_per_pixel / 8));
+	*(unsigned int *)dst = color;
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	img;
@@ -32,8 +40,7 @@ int	main(int argc, char **argv)
 		img.img = mlx_new_image(img.mlx, img.ResoX, img.ResoY);
 		howmanyconso(&img);
 		texture_init(&img);
-		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_lenght,
-							&img.endian);
+		img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_lenght, &img.endian);
 		show_map_in_pixel(&img);
 		mlx_hook(img.win_ptr, 2, 1, deal_key, &img);
 		mlx_loop(img.mlx);

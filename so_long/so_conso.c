@@ -18,11 +18,14 @@
 
 void	howmanyconso(t_data *img)
 {
-	int	y = 0;
-	int	x = 0;
+	int	y;
+	int	x;
+
+	x = 0;
+	y = 0;
 	img->nb_conso = 0;
 	img->Pconso = 0;
-	while(img->map[y] != NULL)
+	while (img->map[y] != NULL)
 	{
 		if (img->map[y][x] == 'C')
 			(img->nb_conso)++;
@@ -45,7 +48,7 @@ void	petsinit(t_data *img)
 {
 	int	width;
 	int	height;
-	
+
 	img->pets[0] = mlx_xpm_file_to_image(img->mlx, PET1, &width, &height);
 	img->pets[1] = mlx_xpm_file_to_image(img->mlx, PET2, &width, &height);
 	img->pets[2] = mlx_xpm_file_to_image(img->mlx, PET3, &width, &height);
@@ -58,50 +61,16 @@ void	petsinit(t_data *img)
 	img->pets[9] = mlx_xpm_file_to_image(img->mlx, PET10, &width, &height);
 }
 
-void	find_exit(t_data *img)
+void	texture_init(t_data *img)
 {
-	int	y = 0;
-	int	x = 0;
-	int	e = 0;
-	while(img->map[y] != NULL)
-	{
-		if (img->map[y][x] == 'E')
-			e = 1;
-		if (img->map[y][x] == 0)
-		{
-			x = 0;
-			y++;
-		}
-		x++;
-	}
-	if (e == 0)
-		exit (0);
-}
+	int	width;
+	int	height;
 
-int	checkexit(t_data *img, int key)
-{
-	if (img->Pconso != img->nb_conso)
-	{
-		if (key == UP)
-			if (img->map[img->Py - 1][img->Px] == 'E')
-				return (1);
-		if (key == DOWN)
-			if (img->map[img->Py + 1][img->Px] == 'E')
-				return (1);
-		if (key == RIGHT)
-			if (img->map[img->Py][img->Px + 1] == 'E')
-			{
-				img->sens = RIGHT;
-				show_map_in_pixel(img);
-				return (1);
-			}
-		if (key == LEFT)
-			if (img->map[img->Py][img->Px - 1] == 'E')
-			{
-				img->sens = LEFT;
-				show_map_in_pixel(img);
-				return (1);
-			}
-	}
-	return (0);
+	petsinit(img);
+	img->sens = LEFT;
+	img->charac = mlx_xpm_file_to_image(img->mlx, CHARAC, &width, &height);
+	img->rcharac = mlx_xpm_file_to_image(img->mlx, RCHARAC, &width, &height);
+	img->exit = mlx_xpm_file_to_image(img->mlx, EXIT, &width, &height);
+	img->wall = mlx_xpm_file_to_image(img->mlx, WALL, &width, &height);
+	img->tiles = mlx_xpm_file_to_image(img->mlx, TILES, &width, &height);
 }

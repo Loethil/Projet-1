@@ -29,15 +29,14 @@ int	movement(t_data *img, int key)
 {
 	static int	counter = 1;
 
-	// printf("%d\n", counter++);
 	if (key == LEFT || key == RIGHT)
 	{
-		if (checkwall(img, key) == 0 && checkexit(img, key) == 0)
+		if (checkwall(img, key) == 0 && checkexit_hor(img, key) == 0)
 			horizontal(img, key, &counter);
 	}
 	else if (key == UP || key == DOWN)
 	{
-		if (checkwall(img, key) == 0 && checkexit(img, key) == 0)
+		if (checkwall(img, key) == 0 && checkexit_ver(img, key) == 0)
 			vertical(img, key, &counter);
 	}
 	find_exit(img);
