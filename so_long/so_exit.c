@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	find_exit(t_data *img)
+int	find_exit(t_data *img)
 {
 	int	y;
 	int	x;
@@ -37,7 +37,9 @@ void	find_exit(t_data *img)
 		x++;
 	}
 	if (e == 0)
-		exit (0);
+		return (1);
+	else
+		return (0);
 }
 
 int	checkexit_ver(t_data *img, int key)

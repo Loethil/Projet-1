@@ -12,9 +12,9 @@
 
 NAME = so_long
 
-OOO = so_long.o so_long_map.o so_long_movement.o show_smth.o so_conso.o so_exit.o get_next_line_utils.o get_next_line.o
+OOO = so_long.o so_long_map.o so_long_movement.o show_smth.o so_conso.o so_exit.o so_errors.o get_next_line_utils.o get_next_line.o
 
-CCC = so_long.c so_long_map.c so_long_movement.c show_smth.c so_conso.c so_exit.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
+CCC = so_long.c so_long_map.c so_long_movement.c show_smth.c so_conso.c so_exit.c so_errors.c ./get_next_line/get_next_line.c ./get_next_line/get_next_line_utils.c
 
 FLAG = -Wall -Wextra -Werror
 

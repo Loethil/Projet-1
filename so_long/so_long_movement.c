@@ -32,20 +32,26 @@ int	movement(t_data *img, int key)
 	if (key == LEFT || key == RIGHT)
 	{
 		if (checkwall(img, key) == 0 && checkexit_hor(img, key) == 0)
-			horizontal(img, key, &counter);
+		{
+			horizontal(img, key);
+			printf("Mouvement = %d\n", counter++);
+		}
 	}
 	else if (key == UP || key == DOWN)
 	{
 		if (checkwall(img, key) == 0 && checkexit_ver(img, key) == 0)
-			vertical(img, key, &counter);
+		{
+			vertical(img, key);
+			printf("Mouvement = %d\n", counter++);
+		}
 	}
-	find_exit(img);
+	if (find_exit(img) == 1)
+		exit (0);
 	return (0);
 }
 
-void	vertical(t_data *img, int key, int *counter)
+void	vertical(t_data *img, int key)
 {
-	printf("Mouvement = %d\n", (*counter)++);
 	if (key == UP)
 	{
 		if (img->map[img->Py - 1][img->Px] == 'C')
@@ -63,9 +69,8 @@ void	vertical(t_data *img, int key, int *counter)
 	show_map_in_pixel(img);
 }
 
-void	horizontal(t_data *img, int key, int *counter)
+void	horizontal(t_data *img, int key)
 {
-	printf("Mouvement = %d\n", (*counter)++);
 	if (key == LEFT)
 	{
 		if (img->sens == LEFT)

@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	howmanyconso(t_data *img)
+int	howmanyconso(t_data *img)
 {
 	int	y;
 	int	x;
@@ -36,12 +36,7 @@ void	howmanyconso(t_data *img)
 		}
 		x++;
 	}
-	img->intetoile = malloc((img->nb_conso + 1) * sizeof(int));
-	if (!img->intetoile)
-		return ;
-	x = 0;
-	while (x < img->nb_conso)
-		img->intetoile[x++] = rand() % 10;
+	return (img->nb_conso);
 }
 
 void	petsinit(t_data *img)

@@ -24,6 +24,7 @@
 #define DOWN 115
 #define ESC 65307
 #define P 64
+// #define COOR img->map 
 #define CHARAC "./sprite/amongus.xpm"
 #define RCHARAC "./sprite/ramongus.xpm"
 #define EXIT "./sprite/Exit.xpm"
@@ -66,9 +67,16 @@ typedef	struct	s_data
 	int	sens;
 	int	ResoX;
 	int	ResoY;
+	int	sizeX;
+	int	sizeY;
 	int	nb_conso;
 	int	Pconso;
 }		t_data;
+
+// typedef struct s_data
+// {
+
+// }		r_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	texture_init(t_data *img);
@@ -78,16 +86,21 @@ void	show_wall(t_data *img);
 void	show_charac(t_data *img);
 void	show_exit(t_data *img);
 void	show_pet(t_data *img);
-void	vertical(t_data *img, int key, int *counter);
-void	horizontal(t_data *img, int key, int *counter);
-void	find_exit(t_data *img);
-void	find_resolution(t_data *img);
+void	vertical(t_data *img, int key);
+void	horizontal(t_data *img, int key);
+void	find_map_size(t_data *img);
 void	petsinit(t_data *img);
+int	check_error2(t_data *img);
+int	find_resolution(t_data *img);
+int	find_exit(t_data *img);
+int	checkcharac(t_data *img);
+int	check_error(t_data *img, char *argv);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	checkwall(t_data *img, int key);
 int	checkexit_ver(t_data *img, int key);
 int	checkexit_hor(t_data *img, int key);
-void	howmanyconso(t_data *img);
+int	checkperimeter(t_data *img);
+int	howmanyconso(t_data *img);
 char	**stock_map_ber(char **map, char *argv);
 #endif

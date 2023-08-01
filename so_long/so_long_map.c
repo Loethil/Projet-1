@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	find_resolution(t_data *img)
+int	find_resolution(t_data *img)
 {
 	img->ResoX = 0;
 	img->ResoY = 0;
@@ -23,8 +23,11 @@ void	find_resolution(t_data *img)
 		(img->ResoX)++;
 	while (img->map[img->ResoY])
 		(img->ResoY)++;
+	if (img->ResoX == img->ResoY + 1)
+		return (1);
 	img->ResoX = (img->ResoX - 1) * P;
-	img->ResoY = img->ResoY * P;
+	img->ResoY = (img->ResoY + 1) * P;
+	return (0);
 }
 
 char	**stock_map_ber(char **map, char *argv)

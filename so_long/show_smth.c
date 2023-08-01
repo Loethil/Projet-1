@@ -21,29 +21,33 @@ void	show_charac(t_data *img)
 	img->Px = img->xmap;
 	img->Py = img->ymap;
 	if (img->sens == LEFT)
-	{
-		mlx_put_image_to_window(img->mlx, img->win_ptr, img->rcharac, (img->xmap * P), (img->ymap * P));
-	}
+		mlx_put_image_to_window(img->mlx,
+			img->win_ptr, img->rcharac, (img->xmap * P), (img->ymap * P));
 	else if (img->sens == RIGHT)
-		mlx_put_image_to_window(img->mlx, img->win_ptr, img->charac, (img->xmap * P), (img->ymap * P));
+		mlx_put_image_to_window(img->mlx,
+			img->win_ptr, img->charac, (img->xmap * P), (img->ymap * P));
 }
 
 void	show_exit(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->exit, (img->xmap * P), (img->ymap * P));
+	mlx_put_image_to_window(img->mlx,
+		img->win_ptr, img->exit, (img->xmap * P), (img->ymap * P));
 }
 
 void	show_wall(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->wall, (img->xmap * P), (img->ymap * P));
+	mlx_put_image_to_window(img->mlx,
+		img->win_ptr, img->wall, (img->xmap * P), (img->ymap * P));
 }
 
 void	show_tiles(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->tiles, (img->xmap * P), (img->ymap * P));
+	mlx_put_image_to_window(img->mlx,
+		img->win_ptr, img->tiles, (img->xmap * P), (img->ymap * P));
 }
 
 void	show_pet(t_data *img)
 {
-	mlx_put_image_to_window(img->mlx, img->win_ptr, img->pets[1]/*img->pets[img->intetoile[c]]*/, (img->xmap * P), (img->ymap * P));
+	mlx_put_image_to_window(img->mlx,
+		img->win_ptr, img->pets[5], (img->xmap * P), (img->ymap * P));
 }
