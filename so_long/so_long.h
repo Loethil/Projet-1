@@ -24,7 +24,6 @@
 #define DOWN 115
 #define ESC 65307
 #define P 64
-// #define COOR img->map 
 #define CHARAC "./sprite/amongus.xpm"
 #define RCHARAC "./sprite/ramongus.xpm"
 #define EXIT "./sprite/Exit.xpm"
@@ -41,7 +40,6 @@
 #define PET9 "./pet/ptitmogus.xpm"
 #define PET10 "./pet/Xavier.xpm"
 
-
 typedef	struct	s_data 
 {
 	void	*mlx;
@@ -49,6 +47,7 @@ typedef	struct	s_data
 	void	*img;
 	char	*addr;
 	char	**map;
+	char	**mapcopy;
 	t_img	*charac;
 	t_img	*exit;
 	t_img	*tiles;
@@ -71,12 +70,10 @@ typedef	struct	s_data
 	int	sizeY;
 	int	nb_conso;
 	int	Pconso;
+	int	conso;
+	int	ifexit;
 }		t_data;
 
-// typedef struct s_data
-// {
-
-// }		r_data;
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	texture_init(t_data *img);
@@ -90,11 +87,12 @@ void	vertical(t_data *img, int key);
 void	horizontal(t_data *img, int key);
 void	find_map_size(t_data *img);
 void	petsinit(t_data *img);
-int	check_error2(t_data *img);
 int	find_resolution(t_data *img);
 int	find_exit(t_data *img);
 int	checkcharac(t_data *img);
 int	check_error(t_data *img, char *argv);
+int	check_error2(t_data *img, char *argv);
+int	check_error3(t_data *img, char *argv);
 int	movement(t_data *img, int key);
 int	deal_key(int key, t_data *img);
 int	checkwall(t_data *img, int key);
@@ -102,5 +100,8 @@ int	checkexit_ver(t_data *img, int key);
 int	checkexit_hor(t_data *img, int key);
 int	checkperimeter(t_data *img);
 int	howmanyconso(t_data *img);
+int	lee_algorithm(t_data *img);
+int	check(t_data *img, int num, int x, int y);
+char	**modified_map(t_data *img, int num, int *count);
 char	**stock_map_ber(char **map, char *argv);
 #endif

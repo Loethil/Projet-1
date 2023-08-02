@@ -33,7 +33,7 @@ int	check_error(t_data *img, char *argv)
 	img->map = stock_map_ber(img->map, argv);
 	if (checkperimeter(img) == 1)
 	{
-		printf("ERROR\nMAP INVALIDE");
+		printf("ERROR\nMAP INVALIDE\n");
 		free(img->map);
 		return (1);
 	}
@@ -43,12 +43,12 @@ int	check_error(t_data *img, char *argv)
 		free(img->map);
 		return (1);
 	}
-	if (check_error2(img) == 1)
+	if (check_error2(img, argv) == 1)
 		return (1);
 	return (0);
 }
 
-int	check_error2(t_data *img)
+int	check_error2(t_data *img, char *argv)
 {
 	if (find_exit(img) == 1)
 	{
@@ -58,17 +58,37 @@ int	check_error2(t_data *img)
 	}
 	if (checkcharac(img) == 1)
 	{
-		printf("ERROR\nPAS DE PLAYER \n");
+		printf("ERROR\nPAS DE PLAYER\n");
 		free(img->map);
 		return (1);
 	}
 	if (find_resolution(img) == 1)
 	{
-		printf("ERROR\nLA MAP EST CARRE \n");
+		printf("ERROR\nLA MAP EST CARRE\n");
+		free(img->map);
+		return (1);
+	}
+	if (check_error3(img, argv) == 1)
+	{
 		free(img->map);
 		return (1);
 	}
 	return (0);
+}
+
+int	check_error3(t_data *img, char *argv)
+{
+	img->mapcopy = malloc(10000000 * sizeof(char *));
+	if (!img->mapcopy)
+		return (0);
+	img->mapcopy = stock_map_ber(img->mapcopy, argv);
+	if (lee_algorithm(img) == 1)
+	{
+		printf("Erreur\nConso / sortie inaccessible\n");
+		free(img->mapcopy);
+		return (1);
+	}
+	return(0);
 }
 
 int	main(int argc, char **argv)

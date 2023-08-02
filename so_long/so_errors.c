@@ -30,28 +30,33 @@ void	find_map_size(t_data *img)
 
 int	checkcharac(t_data *img)
 {
-	int	y;
-	int	x;
 	int	p;
 
-	y = 0;
-	x = 0;
 	p = 0;
-	while (img->map[y] != NULL)
+	img->xmap = 0;
+	img->ymap = 0;
+	while (img->map[img->ymap] != NULL)
 	{
-		if (img->map[y][x] == 'P')
-			p = 1;
-		if (img->map[y][x] == 0)
+		if (img->map[img->ymap][img->xmap] == 'P')
 		{
-			x = 0;
-			y++;
+			p += 1;
+			break ;
 		}
-		x++;
+		if (img->map[img->ymap][img->xmap] == 0)
+		{
+			img->xmap = 0;
+			(img->ymap)++;
+		}
+		(img->xmap)++;
 	}
-	if (p == 0)
+	if (p == 0 || p > 1)
 		return (1);
 	else
+	{
+		img->Px = img->xmap;
+		img->Py = img->ymap;
 		return (0);
+	}
 }
 
 int	checkperimeter(t_data *img)

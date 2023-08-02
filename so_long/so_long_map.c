@@ -26,7 +26,7 @@ int	find_resolution(t_data *img)
 	if (img->ResoX == img->ResoY + 1)
 		return (1);
 	img->ResoX = (img->ResoX - 1) * P;
-	img->ResoY = (img->ResoY + 1) * P;
+	img->ResoY = (img->ResoY) * P;
 	return (0);
 }
 
