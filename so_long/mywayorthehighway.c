@@ -76,7 +76,7 @@ int	lee_algorithm(t_data *img)
 	int count = 0;
 	img->mapcopy[img->Py][img->Px] = '3';
 	img->conso = 0;
-	img->exit = 0;
+	img->ifexit = 0;
 	while (1)
 	{
 		count = 0;
@@ -84,9 +84,7 @@ int	lee_algorithm(t_data *img)
 		if (!count)
 			break;
 	}
-	if (img->ifexit == 0)
-		return (1);
-	if (img->conso != img->nb_conso)
+	if (img->ifexit != 1 || img->conso != img->nb_conso)
 		return (1);
 	return(0);
 }
