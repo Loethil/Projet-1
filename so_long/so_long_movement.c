@@ -17,7 +17,10 @@
 int	deal_key(int key, t_data *img)
 {
 	if (key == ESC)
+	{
+		destroytheworld(img);
 		exit (0);
+	}
 	else if (key == UP || key == DOWN)
 		movement(img, key);
 	else if (key == LEFT || key == RIGHT)
@@ -34,7 +37,7 @@ int	movement(t_data *img, int key)
 		if (checkwall(img, key) == 0 && checkexit_hor(img, key) == 0)
 		{
 			horizontal(img, key);
-			printf("Mouvement = %d\n", counter++);
+			printf("Mouvements = %d\n", counter++);
 		}
 	}
 	else if (key == UP || key == DOWN)
@@ -42,11 +45,14 @@ int	movement(t_data *img, int key)
 		if (checkwall(img, key) == 0 && checkexit_ver(img, key) == 0)
 		{
 			vertical(img, key);
-			printf("Mouvement = %d\n", counter++);
+			printf("Mouvements = %d\n", counter++);
 		}
 	}
 	if (find_exit(img) == 1)
+	{
+		destroytheworld(img);
 		exit (0);
+	}
 	return (0);
 }
 

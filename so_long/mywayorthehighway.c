@@ -17,51 +17,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int check(t_data *img, int num, int x, int y)
+int	check(t_data *img, int num, int x, int y)
 {
-	// check up
 	if (y - 1 >= 0 && img->mapcopy[y - 1][x] == num + 48)
-		return 1;
-	//check down
+		return (1);
 	if (y < img->sizeY - 1 && img->mapcopy[y + 1][x] == num + 48)
-		return 1;
-	// check right
+		return (1);
 	if (x < img->sizeX - 1 && img->mapcopy[y][x + 1] == num + 48)
-		return 1;
-	//check left
+		return (1);
 	if (x - 1 >= 0 && img->mapcopy[y][x - 1] == num + 48)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
 }
 
-// create the wave into the tab (start to 3 and go on)
+int	checkvariable(t_data *img, int num, int x, int y)
+{
+	if (check(img, num, x, y) && img->mapcopy[y][x] == '0')
+	{
+		img->mapcopy[y][x] = num + 48;
+		return (1);
+	}
+	if (check(img, num, x, y) && img->mapcopy[y][x] == 'C')
+	{
+		img->mapcopy[y][x] = num + 48;
+		img->conso += 1;
+		return (1);
+	}
+	if (check(img, num, x, y) && img->mapcopy[y][x] == 'E')
+	{
+		img->mapcopy[y][x] = num + 48;
+		img->ifexit = 1;
+		return (1);
+	}
+	return (0);
+}
+
 char	**modified_map(t_data *img, int num, int *count)
 {
-	int	y = 0;
-	int	x = 0;
+	int	y;
+	int	x;
+
 	y = 0;
 	x = 0;
 	while (y < img->sizeY)
 	{
 		while (x < img->sizeX)
 		{
-			if (check(img, num, x, y) && img->mapcopy[y][x] == '0')
-			{
-				img->mapcopy[y][x] = num + 48;
+			if (checkvariable(img, num, x, y) == 1)
 				(*count)++;
-			}
-			if (check(img, num, x, y) && img->mapcopy[y][x] == 'C')
-			{
-				img->mapcopy[y][x] = num + 48;
-				img->conso += 1;
-				(*count)++;
-			}
-			if (check(img, num, x, y) && img->mapcopy[y][x] == 'E')
-			{
-				img->mapcopy[y][x] = num + 48;
-				img->ifexit = 1;
-				(*count)++;
-			}
 			x++;
 		}
 		x = 0;
@@ -72,8 +75,11 @@ char	**modified_map(t_data *img, int num, int *count)
 
 int	lee_algorithm(t_data *img)
 {
-	int num = 3;
-	int count = 0;
+	int	num;
+	int	count;
+
+	num = 3;
+	count = 0;
 	img->mapcopy[img->Py][img->Px] = '3';
 	img->conso = 0;
 	img->ifexit = 0;
@@ -82,18 +88,9 @@ int	lee_algorithm(t_data *img)
 		count = 0;
 		img->mapcopy = modified_map(img, num, &count);
 		if (!count)
-			break;
+			break ;
 	}
 	if (img->ifexit != 1 || img->conso != img->nb_conso)
 		return (1);
-	return(0);
+	return (0);
 }
-		// for (int i = 0; img->mapcopy[i]; i++)
-		// {
-		// 	for(int j = 0; img->mapcopy[i][j]; j++)
-		// 		printf("%c", img->mapcopy[i][j]);
-		// }
-	// img->map = malloc(10000000 * sizeof(char *));
-	// if (!img->map)
-	// 	return (0);
-	// img->map = stock_map_ber(img->map, "./map/map.ber");

@@ -30,7 +30,7 @@ char	*choose(char *line, int d, int r, int a)
 	}
 	else if (d == 2)
 	{
-		tmp = malloc(sizeof(char) * 2147478364);
+		tmp = malloc(sizeof(char) * 10000);
 		if (!tmp)
 			return (NULL);
 		while (*line && line[r] != '\n' && line[r] != '\0')
@@ -72,7 +72,7 @@ char	*get_next_line(int fd)
 	int				red;
 
 	red = 1;
-	buf = malloc (2147478364 * sizeof(char));
+	buf = malloc (10000 * sizeof(char));
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, buf, 0) < 0)
 	{
 		free (buf);
@@ -80,7 +80,7 @@ char	*get_next_line(int fd)
 	}
 	if (stk == NULL)
 	{
-		stk = malloc(2147478364 * sizeof(char));
+		stk = malloc(10000 * sizeof(char));
 		stk[0] = 0;
 	}
 	if (!stk)

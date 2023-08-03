@@ -87,6 +87,7 @@ void	vertical(t_data *img, int key);
 void	horizontal(t_data *img, int key);
 void	find_map_size(t_data *img);
 void	petsinit(t_data *img);
+void	freetab(char **tab);
 int	find_resolution(t_data *img);
 int	find_exit(t_data *img);
 int	checkcharac(t_data *img);
@@ -102,6 +103,8 @@ int	checkperimeter(t_data *img);
 int	howmanyconso(t_data *img);
 int	lee_algorithm(t_data *img);
 int	check(t_data *img, int num, int x, int y);
+int	checkvariable(t_data *img, int num, int x, int y);
+int	destroytheworld(t_data *img);
 char	**modified_map(t_data *img, int num, int *count);
 char	**stock_map_ber(char **map, char *argv);
 #endif

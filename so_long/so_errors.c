@@ -51,12 +51,9 @@ int	checkcharac(t_data *img)
 	}
 	if (p == 0 || p > 1)
 		return (1);
-	else
-	{
-		img->Px = img->xmap;
-		img->Py = img->ymap;
-		return (0);
-	}
+	img->Px = img->xmap;
+	img->Py = img->ymap;
+	return (0);
 }
 
 int	checkperimeter(t_data *img)
@@ -77,4 +74,16 @@ int	checkperimeter(t_data *img)
 		if (img->map[(img->ymap)--][img->xmap] != '1')
 			return (1);
 	return (0);
+}
+
+void	freetab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i++]);
+	}
+	free (tab);
 }
