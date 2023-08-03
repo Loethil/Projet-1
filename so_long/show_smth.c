@@ -49,5 +49,6 @@ void	show_tiles(t_data *img)
 void	show_pet(t_data *img)
 {
 	mlx_put_image_to_window(img->mlx,
-		img->win_ptr, img->pets[5], (img->xmap * P), (img->ymap * P));
+		img->win_ptr, img->pets[img->intsansetoile],
+		(img->xmap * P), (img->ymap * P));
 }

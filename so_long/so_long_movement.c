@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 #include "mlx.h"
 #include "so_long.h"
+#include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "./ft_printf/ft_printf.h"
 
 int	deal_key(int key, t_data *img)
 {
@@ -37,7 +39,7 @@ int	movement(t_data *img, int key)
 		if (checkwall(img, key) == 0 && checkexit_hor(img, key) == 0)
 		{
 			horizontal(img, key);
-			printf("Mouvements = %d\n", counter++);
+			ft_printf("Mouvements = %d\n", counter++);
 		}
 	}
 	else if (key == UP || key == DOWN)
@@ -45,7 +47,7 @@ int	movement(t_data *img, int key)
 		if (checkwall(img, key) == 0 && checkexit_ver(img, key) == 0)
 		{
 			vertical(img, key);
-			printf("Mouvements = %d\n", counter++);
+			ft_printf("Mouvements = %d\n", counter++);
 		}
 	}
 	if (find_exit(img) == 1)

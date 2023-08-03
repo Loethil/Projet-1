@@ -23,20 +23,16 @@ int	find_resolution(t_data *img)
 		(img->ResoX)++;
 	while (img->map[img->ResoY])
 		(img->ResoY)++;
-	if (img->ResoX == img->ResoY + 1)
-		return (1);
 	img->ResoX = (img->ResoX - 1) * P;
 	img->ResoY = (img->ResoY) * P;
 	return (0);
 }
 
-char	**stock_map_ber(char **map, char *argv)
+char	**stock_map_ber(char **map, int fd)
 {
-	int	fd;
 	int	i;
 
 	i = 0;
-	fd = open(argv, O_RDONLY);
 	while (1)
 	{
 		map[i++] = get_next_line(fd);

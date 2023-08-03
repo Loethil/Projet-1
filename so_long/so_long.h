@@ -54,12 +54,10 @@ typedef	struct	s_data
 	t_img	*wall;
 	t_img	*rcharac;
 	t_img	*pets[10];
-	int	*intetoile;
+	int	intsansetoile;
 	int	xmap;
 	int	ymap;
-	int	bits_per_pixel;
-	int	line_lenght;
-	int	endian;
+	int	fd;
 	int	pixel_lenght;
 	int	Px;
 	int	Py;
@@ -106,5 +104,5 @@ int	check(t_data *img, int num, int x, int y);
 int	checkvariable(t_data *img, int num, int x, int y);
 int	destroytheworld(t_data *img);
 char	**modified_map(t_data *img, int num, int *count);
-char	**stock_map_ber(char **map, char *argv);
+char	**stock_map_ber(char **map, int fd);
 #endif

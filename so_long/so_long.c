@@ -16,23 +16,29 @@
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include "./ft_printf/ft_printf.h"
 
 int	check_error(t_data *img, char *argv)
 {
+	img->fd = open(argv, O_RDONLY);
+	if (img->fd == -1)
+	{
+		ft_printf("Error\n MAP INTROUVABLE\n");
+		return (1);
+	}
 	img->map = malloc((12 * 24) + 1 * sizeof(char *));
 	if (!img->map)
 		return (0);
-	img->map = stock_map_ber(img->map, argv);
+	img->map = stock_map_ber(img->map, img->fd);
+	close(*argv);
 	if (checkperimeter(img) == 1)
 	{
-		printf("ERROR\nMAP INVALIDE\n");
-		freetab(img->map);
+		ft_printf("ERROR\nMAP INVALIDE\n");
 		return (1);
 	}
 	if (howmanyconso(img) < 1)
 	{
-		printf("ERROR\nPAS ASSEZ DE CONSOMMABLE\n");
-		freetab(img->map);
+		ft_printf("ERROR\nPAS ASSEZ DE CONSOMMABLE\n");
 		return (1);
 	}
 	if (check_error2(img, argv) == 1)
@@ -44,40 +50,29 @@ int	check_error2(t_data *img, char *argv)
 {
 	if (find_exit(img) == 1)
 	{
-		printf("ERROR\nPAS DE SORTIE \n");
-		freetab(img->map);
+		ft_printf("ERROR\nPAS DE SORTIE \n");
 		return (1);
 	}
 	if (checkcharac(img) == 1)
 	{
-		printf("ERROR\nPAS DE PLAYER\n");
-		freetab(img->map);
-		return (1);
-	}
-	if (find_resolution(img) == 1)
-	{
-		printf("ERROR\nLA MAP EST CARRE\n");
-		freetab(img->map);
+		ft_printf("ERROR\nPAS DE PLAYER\n");
 		return (1);
 	}
 	if (check_error3(img, argv) == 1)
-	{
-		freetab(img->map);
 		return (1);
-	}
 	return (0);
 }
 
 int	check_error3(t_data *img, char *argv)
 {
+	img->fd = open(argv, O_RDONLY);
 	img->mapcopy = malloc((12 * 24) + 1 * sizeof(char *));
 	if (!img->mapcopy)
 		return (0);
-	img->mapcopy = stock_map_ber(img->mapcopy, argv);
+	img->mapcopy = stock_map_ber(img->mapcopy, img->fd);
 	if (lee_algorithm(img) == 1)
 	{
-		printf("Error\nConso / sortie inaccessible\n");
-		freetab(img->map);
+		ft_printf("Error\nConso / sortie inaccessible\n");
 		freetab(img->mapcopy);
 		return (1);
 	}
@@ -110,11 +105,16 @@ int	main(int argc, char **argv)
 {
 	t_data	img;
 
+	img.map = NULL;
 	srand(time(NULL));
+	img.intsansetoile = rand() % 10;
 	if (argc == 2)
 	{
 		if (check_error(&img, argv[1]) == 1)
+		{
+			freetab(img.map);
 			return (0);
+		}
 		img.mlx = mlx_init();
 		img.win_ptr = mlx_new_window(img.mlx, img.ResoX, img.ResoY, "so_long");
 		texture_init(&img);
@@ -124,7 +124,7 @@ int	main(int argc, char **argv)
 	}
 	else if (argc < 2 || argc > 2)
 	{
-		printf("Error\nDemasiados o insuficientes argumentos\n");
+		ft_printf("Error\nDemasiados o insuficientes argumentos\n");
 		return (0);
 	}
 	return (0);
