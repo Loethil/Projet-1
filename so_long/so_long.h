@@ -62,10 +62,10 @@ typedef	struct	s_data
 	int	Px;
 	int	Py;
 	int	sens;
-	int	ResoX;
-	int	ResoY;
-	int	sizeX;
-	int	sizeY;
+	int	resox;
+	int	resoy;
+	int	sizex;
+	int	sizey;
 	int	nb_conso;
 	int	Pconso;
 	int	conso;

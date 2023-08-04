@@ -17,14 +17,14 @@
 
 int	find_resolution(t_data *img)
 {
-	img->ResoX = 0;
-	img->ResoY = 0;
-	while (img->map[img->ResoY][img->ResoX])
-		(img->ResoX)++;
-	while (img->map[img->ResoY])
-		(img->ResoY)++;
-	img->ResoX = (img->ResoX - 1) * P;
-	img->ResoY = (img->ResoY) * P;
+	img->resox = 0;
+	img->resoy = 0;
+	while (img->map[img->resoy][img->resox])
+		(img->resox)++;
+	while (img->map[img->resoy])
+		(img->resoy)++;
+	img->resox = (img->resox - 1) * P;
+	img->resoy = (img->resoy) * P;
 	return (0);
 }
 

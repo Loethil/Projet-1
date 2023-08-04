@@ -116,7 +116,7 @@ int	main(int argc, char **argv)
 			return (0);
 		}
 		img.mlx = mlx_init();
-		img.win_ptr = mlx_new_window(img.mlx, img.ResoX, img.ResoY, "so_long");
+		img.win_ptr = mlx_new_window(img.mlx, img.resox, img.resoy, "so_long");
 		texture_init(&img);
 		show_map_in_pixel(&img);
 		mlx_hook(img.win_ptr, 17, 0, oppenheimer, &img);

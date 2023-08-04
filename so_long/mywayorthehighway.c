@@ -21,9 +21,9 @@ int	check(t_data *img, int num, int x, int y)
 {
 	if (y - 1 >= 0 && img->mapcopy[y - 1][x] == num + 48)
 		return (1);
-	if (y < img->sizeY - 1 && img->mapcopy[y + 1][x] == num + 48)
+	if (y < img->sizey - 1 && img->mapcopy[y + 1][x] == num + 48)
 		return (1);
-	if (x < img->sizeX - 1 && img->mapcopy[y][x + 1] == num + 48)
+	if (x < img->sizex - 1 && img->mapcopy[y][x + 1] == num + 48)
 		return (1);
 	if (x - 1 >= 0 && img->mapcopy[y][x - 1] == num + 48)
 		return (1);
@@ -59,9 +59,9 @@ char	**modified_map(t_data *img, int num, int *count)
 
 	y = 0;
 	x = 0;
-	while (y < img->sizeY)
+	while (y < img->sizey)
 	{
-		while (x < img->sizeX)
+		while (x < img->sizex)
 		{
 			if (checkvariable(img, num, x, y) == 1)
 				(*count)++;

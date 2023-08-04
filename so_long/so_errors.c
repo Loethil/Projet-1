@@ -18,14 +18,14 @@
 
 void	find_map_size(t_data *img)
 {
-	img->sizeX = 0;
-	img->sizeY = 0;
-	while (img->map[img->sizeY][img->sizeX])
-		(img->sizeX)++;
-	while (img->map[img->sizeY])
-		(img->sizeY)++;
-	img->sizeX = img->sizeX - 1;
-	img->sizeY = img->sizeY;
+	img->sizex = 0;
+	img->sizey = 0;
+	while (img->map[img->sizey][img->sizex])
+		(img->sizex)++;
+	while (img->map[img->sizey])
+		(img->sizey)++;
+	img->sizex = img->sizex - 1;
+	img->sizey = img->sizey;
 }
 
 int	checkcharac(t_data *img)
@@ -64,7 +64,7 @@ int	checkperimeter(t_data *img)
 	while (img->xmap < img->sizeX - 1)
 		if (img->map[img->ymap][(img->xmap)++] != '1')
 			return (1);
-	while (img->ymap < img->sizeY - 1)
+	while (img->ymap < img->sizey - 1)
 		if (img->map[(img->ymap)++][img->xmap] != '1')
 			return (1);
 	while (img->xmap > 0)
