@@ -12,7 +12,6 @@
 
 #include "mlx.h"
 #include "so_long.h"
-#include "./get_next_line/get_next_line.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,7 +29,8 @@ int	check_error(t_data *img, char *argv)
 	if (!img->map)
 		return (0);
 	img->map = stock_map_ber(img->map, img->fd);
-	close(*argv);
+	close(img->fd);
+	find_resolution(img);
 	if (checkperimeter(img) == 1)
 	{
 		ft_printf("ERROR\nMAP INVALIDE\n");
@@ -79,7 +79,7 @@ int	check_error3(t_data *img, char *argv)
 	return (0);
 }
 
-int	destroytheworld(t_data *img)
+int	oppenheimer(t_data *img)
 {
 	int	i;
 
@@ -98,7 +98,7 @@ int	destroytheworld(t_data *img)
 	freetab(img->map);
 	freetab(img->mapcopy);
 	free (img->mlx);
-	return (0);
+	exit (0);
 }
 
 int	main(int argc, char **argv)
@@ -119,13 +119,11 @@ int	main(int argc, char **argv)
 		img.win_ptr = mlx_new_window(img.mlx, img.ResoX, img.ResoY, "so_long");
 		texture_init(&img);
 		show_map_in_pixel(&img);
+		mlx_hook(img.win_ptr, 17, 0, oppenheimer, &img);
 		mlx_hook(img.win_ptr, 2, 1, deal_key, &img);
 		mlx_loop(img.mlx);
 	}
 	else if (argc < 2 || argc > 2)
-	{
 		ft_printf("Error\nDemasiados o insuficientes argumentos\n");
-		return (0);
-	}
 	return (0);
 }

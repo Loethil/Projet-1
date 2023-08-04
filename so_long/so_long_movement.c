@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "mlx.h"
 #include "so_long.h"
-#include "./get_next_line/get_next_line.h"
+// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "./ft_printf/ft_printf.h"
@@ -19,10 +19,7 @@
 int	deal_key(int key, t_data *img)
 {
 	if (key == ESC)
-	{
-		destroytheworld(img);
-		exit (0);
-	}
+		oppenheimer(img);
 	else if (key == UP || key == DOWN)
 		movement(img, key);
 	else if (key == LEFT || key == RIGHT)
@@ -51,10 +48,7 @@ int	movement(t_data *img, int key)
 		}
 	}
 	if (find_exit(img) == 1)
-	{
-		destroytheworld(img);
-		exit (0);
-	}
+		oppenheimer(img);
 	return (0);
 }
 

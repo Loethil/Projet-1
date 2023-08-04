@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "./get_next_line/get_next_line.h"
+// #include "./get_next_line/get_next_line.h"
 #include "mlx.h"
 #include "mlx_int.h"
 #include <stdio.h>
@@ -102,7 +102,7 @@ int	howmanyconso(t_data *img);
 int	lee_algorithm(t_data *img);
 int	check(t_data *img, int num, int x, int y);
 int	checkvariable(t_data *img, int num, int x, int y);
-int	destroytheworld(t_data *img);
+int	oppenheimer(t_data *img);
 char	**modified_map(t_data *img, int num, int *count);
 char	**stock_map_ber(char **map, int fd);
 #endif
