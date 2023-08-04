@@ -12,26 +12,6 @@
 
 NAME = so_long
 
-OOO = get_next_line.o\
-	get_next_line_utils.o\
-	mywayorthehighway.o\
-	show_smth.o\
-	so_exit.o\
-	so_long_movement.o\
-	so_conso.o\
-	so_long.o\
-	so_errors.o\
-	so_long_map.o\
-	ft_hexformat.o\
-	ft_putadress.o\
-	ft_puthex.o\
-	ft_putnbrpos_fd.o\
-	ft_pvoid.o\
-	ft_printf.o\
-	ft_putchar_fd.o\
-	ft_putnbr_fd.o\
-	ft_putstr_fd.o
-
 CCC = ./get_next_line/get_next_line.c\
 	./get_next_line/get_next_line_utils.c\
 	mywayorthehighway.c\
@@ -52,16 +32,18 @@ CCC = ./get_next_line/get_next_line.c\
 	ft_printf/ft_putnbr_fd.c\
 	ft_printf/ft_putstr_fd.c
 
+OOO = $(CCC:.c=.o)
+
 FLAG = -Wall -Wextra -Werror
 
 LIBINCLUDE = -Lminilibx-linux -lmlx_Linux -I minilibx-linux -lXext -lX11
 
 all: $(NAME)
 
-$(NAME): .c.o
+$(NAME): $(OOO)
 	gcc $(OOO) $(FLAG) $(LIBINCLUDE) -o $(NAME) -g3
 .c.o:
-	gcc -c $(CCC) $(FLAG) $(LIBINCLUDE) -g3
+	gcc $(FLAG) $(LIBINCLUDE)  -c $< -o ${<:.c=.o} -g3
 clean:
 	rm -f $(OOO)
 fclean: clean

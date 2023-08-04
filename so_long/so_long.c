@@ -22,7 +22,7 @@ int	check_error(t_data *img, char *argv)
 	img->fd = open(argv, O_RDONLY);
 	if (img->fd == -1)
 	{
-		ft_printf("Error\n MAP INTROUVABLE\n");
+		ft_printf("Error\nMAP INTROUVABLE\n");
 		return (1);
 	}
 	img->map = malloc((12 * 24) + 1 * sizeof(char *));
@@ -55,7 +55,7 @@ int	check_error2(t_data *img, char *argv)
 	}
 	if (checkcharac(img) == 1)
 	{
-		ft_printf("ERROR\nPAS DE PLAYER\n");
+		ft_printf("ERROR\nPAS OU TROP DE PLAYER\n");
 		return (1);
 	}
 	if (check_error3(img, argv) == 1)
@@ -72,7 +72,7 @@ int	check_error3(t_data *img, char *argv)
 	img->mapcopy = stock_map_ber(img->mapcopy, img->fd);
 	if (lee_algorithm(img) == 1)
 	{
-		ft_printf("Error\nConso / sortie inaccessible\n");
+		ft_printf("Error\nCONSO OU SORTIE INACESSIBLE\n");
 		freetab(img->mapcopy);
 		return (1);
 	}
