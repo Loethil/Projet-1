@@ -23,6 +23,8 @@ int	find_resolution(t_data *img)
 		(img->resox)++;
 	while (img->map[img->resoy])
 		(img->resoy)++;
+	if (img->resoy > 15 || img->resox > 30)
+		return (1);
 	img->resox = (img->resox - 1) * P;
 	img->resoy = (img->resoy) * P;
 	return (0);

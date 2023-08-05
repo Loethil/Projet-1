@@ -25,20 +25,19 @@ int	check_error(t_data *img, char *argv)
 		ft_printf("Error\nMAP INTROUVABLE\n");
 		return (1);
 	}
-	img->map = malloc((12 * 24) + 1 * sizeof(char *));
+	img->map = malloc((15 * 30) + 1 * sizeof(char *));
 	if (!img->map)
 		return (0);
 	img->map = stock_map_ber(img->map, img->fd);
 	close(img->fd);
-	find_resolution(img);
+	if (find_resolution(img) == 1)
+	{
+		ft_printf("ERROR\nMAP TROP GRANDE\n30 PAR 15 MAX\n");
+		return (1);
+	}
 	if (checkperimeter(img) == 1)
 	{
 		ft_printf("ERROR\nMAP INVALIDE\n");
-		return (1);
-	}
-	if (howmanyconso(img) < 1)
-	{
-		ft_printf("ERROR\nPAS ASSEZ DE CONSOMMABLE\n");
 		return (1);
 	}
 	if (check_error2(img, argv) == 1)
@@ -48,9 +47,14 @@ int	check_error(t_data *img, char *argv)
 
 int	check_error2(t_data *img, char *argv)
 {
+	if (howmanyconso(img) < 1)
+	{
+		ft_printf("ERROR\nPAS ASSEZ DE CONSOMMABLE\n");
+		return (1);
+	}
 	if (find_exit(img) == 1)
 	{
-		ft_printf("ERROR\nPAS DE SORTIE \n");
+		ft_printf("ERROR\nPAS OU TROP DE SORTIE \n");
 		return (1);
 	}
 	if (checkcharac(img) == 1)
@@ -66,7 +70,7 @@ int	check_error2(t_data *img, char *argv)
 int	check_error3(t_data *img, char *argv)
 {
 	img->fd = open(argv, O_RDONLY);
-	img->mapcopy = malloc((12 * 24) + 1 * sizeof(char *));
+	img->mapcopy = malloc((15 * 30) + 1 * sizeof(char *));
 	if (!img->mapcopy)
 		return (0);
 	img->mapcopy = stock_map_ber(img->mapcopy, img->fd);

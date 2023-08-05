@@ -12,7 +12,6 @@
 
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -24,7 +23,7 @@ int	howmanyconso(t_data *img)
 	x = 0;
 	y = 0;
 	img->nb_conso = 0;
-	img->Pconso = 0;
+	img->pconso = 0;
 	while (img->map[y] != NULL)
 	{
 		if (img->map[y][x] == 'C')

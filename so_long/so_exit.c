@@ -12,7 +12,6 @@
 
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -28,7 +27,7 @@ int	find_exit(t_data *img)
 	while (img->map[y] != NULL)
 	{
 		if (img->map[y][x] == 'E')
-			e = 1;
+			e += 1;
 		if (img->map[y][x] == 0)
 		{
 			x = 0;
@@ -36,7 +35,7 @@ int	find_exit(t_data *img)
 		}
 		x++;
 	}
-	if (e == 0)
+	if (e == 0 || e > 1)
 		return (1);
 	else
 		return (0);
@@ -44,13 +43,13 @@ int	find_exit(t_data *img)
 
 int	checkexit_ver(t_data *img, int key)
 {
-	if (img->Pconso != img->nb_conso)
+	if (img->pconso != img->nb_conso)
 	{
 		if (key == UP)
-			if (img->map[img->Py - 1][img->Px] == 'E')
+			if (img->map[img->py - 1][img->px] == 'E')
 				return (1);
 		if (key == DOWN)
-			if (img->map[img->Py + 1][img->Px] == 'E')
+			if (img->map[img->py + 1][img->px] == 'E')
 				return (1);
 	}
 	return (0);
@@ -58,11 +57,11 @@ int	checkexit_ver(t_data *img, int key)
 
 int	checkexit_hor(t_data *img, int key)
 {
-	if (img->Pconso != img->nb_conso)
+	if (img->pconso != img->nb_conso)
 	{
 		if (key == RIGHT)
 		{
-			if (img->map[img->Py][img->Px + 1] == 'E')
+			if (img->map[img->py][img->px + 1] == 'E')
 			{
 				img->sens = RIGHT;
 				show_map_in_pixel(img);
@@ -71,7 +70,7 @@ int	checkexit_hor(t_data *img, int key)
 		}
 		if (key == LEFT)
 		{
-			if (img->map[img->Py][img->Px - 1] == 'E')
+			if (img->map[img->py][img->px - 1] == 'E')
 			{
 				img->sens = LEFT;
 				show_map_in_pixel(img);

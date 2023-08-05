@@ -12,14 +12,13 @@
 
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 
 void	show_charac(t_data *img)
 {
-	img->Px = img->xmap;
-	img->Py = img->ymap;
+	img->px = img->xmap;
+	img->py = img->ymap;
 	if (img->sens == LEFT)
 		mlx_put_image_to_window(img->mlx,
 			img->win_ptr, img->rcharac, (img->xmap * P), (img->ymap * P));

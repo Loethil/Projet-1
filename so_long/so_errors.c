@@ -12,7 +12,6 @@
 
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -51,8 +50,8 @@ int	checkcharac(t_data *img)
 	}
 	if (p == 0 || p > 1)
 		return (1);
-	img->Px = img->xmap;
-	img->Py = img->ymap;
+	img->px = img->xmap;
+	img->py = img->ymap;
 	return (0);
 }
 
@@ -61,7 +60,7 @@ int	checkperimeter(t_data *img)
 	img->xmap = 0;
 	img->ymap = 0;
 	find_map_size(img);
-	while (img->xmap < img->sizeX - 1)
+	while (img->xmap < img->sizex - 1)
 		if (img->map[img->ymap][(img->xmap)++] != '1')
 			return (1);
 	while (img->ymap < img->sizey - 1)

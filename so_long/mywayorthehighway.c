@@ -12,7 +12,6 @@
 
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <time.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,11 +43,7 @@ int	checkvariable(t_data *img, int num, int x, int y)
 		return (1);
 	}
 	if (check(img, num, x, y) && img->mapcopy[y][x] == 'E')
-	{
-		img->mapcopy[y][x] = num + 48;
 		img->ifexit = 1;
-		return (1);
-	}
 	return (0);
 }
 
@@ -80,7 +75,7 @@ int	lee_algorithm(t_data *img)
 
 	num = 3;
 	count = 0;
-	img->mapcopy[img->Py][img->Px] = '3';
+	img->mapcopy[img->py][img->px] = '3';
 	img->conso = 0;
 	img->ifexit = 0;
 	while (1)

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 #include "mlx.h"
 #include "so_long.h"
-// #include "./get_next_line/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "./ft_printf/ft_printf.h"
@@ -56,17 +55,17 @@ void	vertical(t_data *img, int key)
 {
 	if (key == UP)
 	{
-		if (img->map[img->Py - 1][img->Px] == 'C')
-			img->Pconso += 1;
-		img->map[img->Py][img->Px] = '0';
-		img->map[--(img->Py)][img->Px] = 'P';
+		if (img->map[img->py - 1][img->px] == 'C')
+			img->pconso += 1;
+		img->map[img->py][img->px] = '0';
+		img->map[--(img->py)][img->px] = 'P';
 	}
 	else if (key == DOWN)
 	{
-		if (img->map[img->Py + 1][img->Px] == 'C')
-			img->Pconso += 1;
-		img->map[img->Py][img->Px] = '0';
-		img->map[++(img->Py)][img->Px] = 'P';
+		if (img->map[img->py + 1][img->px] == 'C')
+			img->pconso += 1;
+		img->map[img->py][img->px] = '0';
+		img->map[++(img->py)][img->px] = 'P';
 	}
 	show_map_in_pixel(img);
 }
@@ -77,10 +76,10 @@ void	horizontal(t_data *img, int key)
 	{
 		if (img->sens == LEFT)
 		{
-			if (img->map[img->Py][img->Px - 1] == 'C')
-				img->Pconso += 1;
-			img->map[img->Py][img->Px] = '0';
-			img->map[img->Py][--(img->Px)] = 'P';
+			if (img->map[img->py][img->px - 1] == 'C')
+				img->pconso += 1;
+			img->map[img->py][img->px] = '0';
+			img->map[img->py][--(img->px)] = 'P';
 		}
 		else
 			img->sens = LEFT;
@@ -89,10 +88,10 @@ void	horizontal(t_data *img, int key)
 	{	
 		if (img->sens == RIGHT)
 		{
-			if (img->map[img->Py][img->Px + 1] == 'C')
-				img->Pconso += 1;
-			img->map[img->Py][img->Px] = '0';
-			img->map[img->Py][++(img->Px)] = 'P';
+			if (img->map[img->py][img->px + 1] == 'C')
+				img->pconso += 1;
+			img->map[img->py][img->px] = '0';
+			img->map[img->py][++(img->px)] = 'P';
 		}
 		else
 			img->sens = RIGHT;
@@ -103,14 +102,14 @@ void	horizontal(t_data *img, int key)
 int	checkwall(t_data *img, int key)
 {
 	if (key == UP)
-		if (img->map[img->Py - 1][img->Px] == '1')
+		if (img->map[img->py - 1][img->px] == '1')
 			return (1);
 	if (key == DOWN)
-		if (img->map[img->Py + 1][img->Px] == '1')
+		if (img->map[img->py + 1][img->px] == '1')
 			return (1);
 	if (key == RIGHT)
 	{
-		if (img->map[img->Py][img->Px + 1] == '1')
+		if (img->map[img->py][img->px + 1] == '1')
 		{
 			img->sens = RIGHT;
 			show_map_in_pixel(img);
@@ -119,7 +118,7 @@ int	checkwall(t_data *img, int key)
 	}
 	if (key == LEFT)
 	{
-		if (img->map[img->Py][img->Px - 1] == '1')
+		if (img->map[img->py][img->px - 1] == '1')
 		{
 			img->sens = LEFT;
 			show_map_in_pixel(img);
