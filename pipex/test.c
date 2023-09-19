@@ -76,6 +76,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char	**all_path; 
 	char	*tab;
+	char	*tub;
 	pid_t	pid;
 	int	fd;
 
@@ -85,29 +86,8 @@ int	main(int argc, char **argv, char **env)
 		fd = open("./outfile", O_WRONLY | O_CREAT | O_TRUNC);
 		all_path = malloc(1000 * sizeof(char *) + 1);
 		all_path = find_path(env, all_path);
-		dup2(fd, 1);
-		if ((pid = fork()) == -1)
-		{	
-			perror("fork");
-			return 1;
-		}
-		else if (pid == 0)
-		{
-			tab = get_access(tab, all_path, argv[3]);
-			if (execve(tab, argv + 3, env) == -1)
-				perror("execve");
-			return (1);
-		}
-		else
-		{
-			tab = get_access(tab, all_path, argv[2]);
-			if (execve(tab, argv + 2, env) == -1)
-				perror("execve");
-			wait(NULL);
-		}
-		close(fd);
-		return (0);
-	}
+		tab = get_access(tab, all_path, argv[2]);
+		if (execve(tab, tub, env) == -1)
+			perror("execve");
 	return (0);
 }
-
